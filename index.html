@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10131f">
+<title>REYA — Voice to Video</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0e17;--panel:#151a29;--line:#293148;--muted:#aab2c5;--accent:#8b7cff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#24204a 0,transparent 36%),var(--bg);color:#f7f7fb;font:15px system-ui,Arial,sans-serif}
+header{padding:25px 18px 18px;max-width:1000px;margin:auto}header .brand{font-size:28px;font-weight:850;letter-spacing:3px}header p{color:var(--muted);margin:5px 0}
+main{max-width:1000px;margin:auto;padding:0 14px 40px;display:grid;gap:14px}
+.card{background:rgba(21,26,41,.96);border:1px solid var(--line);border-radius:17px;padding:17px}
+h2{font-size:17px;margin:0 0 13px}label{display:block;font-weight:650;margin:12px 0 7px}
+input[type=file],textarea{width:100%;border:1px solid #38425b;background:#0e1320;color:white;border-radius:10px;padding:11px}
+textarea{min-height:105px;resize:vertical;line-height:1.5}
+small,.hint{color:var(--muted);line-height:1.5}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:11px;padding:12px 16px;background:var(--accent);color:white;font-weight:750;font-size:15px;cursor:pointer}
+button.secondary{background:#293148}button:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+canvas{width:100%;aspect-ratio:16/9;background:#070910;border-radius:12px;display:block}
+audio{width:100%;margin-top:10px}
+.status{padding:10px 12px;border:1px solid var(--line);border-radius:10px;color:#cbd2e3;margin-top:12px;min-height:42px}
+#thumbs{display:flex;gap:8px;overflow:auto;margin-top:10px}
+#thumbs img{width:74px;height:58px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:5px 15px 25px}
+@media(max-width:600px){.row{grid-template-columns:1fr}header{padding-top:19px}}
+</style>
+</head>
+<body>
+<header><div class="brand">REYA</div><p>Turn your voice into a visual story.</p></header>
+<main>
+<section class="card">
+<h2>1. Add your voice</h2>
+<label for="audioFile">Audio file (MP3 / WAV / M4A)</label>
+<input id="audioFile" type="file" accept="audio/*">
+<audio id="audioPlayer" controls hidden></audio>
+<p class="hint">Your original audio will be used in the exported video.</p>
+</section>
+<section class="card">
+<h2>2. Add your visuals</h2>
+<label for="imageFiles">Choose images (select multiple)</label>
+<input id="imageFiles" type="file" accept="image/*" multiple>
+<div id="thumbs"></div>
+<p class="hint">Images are shown in the order you select them. Automatic AI image matching will be added in a later version.</p>
+</section>
+<section class="card">
+<h2>3. Your script (optional)</h2>
+<textarea id="script" placeholder="Paste your voice script here. Separate each sentence with a full stop or a new line."></textarea>
+<div class="row">
+<div><label for="transition">Image transition</label><select id="transition" style="width:100%;padding:11px;background:#0e1320;color:white;border:1px solid #38425b;border-radius:10px"><option value="fade">Soft fade</option><option value="cut">Simple cut</option></select></div>
+<div><label for="zoom">Slow zoom</label><select id="zoom" style="width:100%;padding:11px;background:#0e1320;color:white;border:1px solid #38425b;border-radius:10px"><option value="yes">On</option><option value="no">Off</option></select></div>
+</div>
+</section>
+<section class="card">
+<h2>4. Preview and export</h2>
+<canvas id="preview" width="1280" height="720"></canvas>
+<div class="actions">
+<button id="previewBtn">Start preview</button>
+<button class="secondary" id="stopBtn">Stop</button>
+<button id="exportBtn">Export video</button>
+</div>
+<div class="status" id="status">Add an audio file and at least one image to begin.</div>
+<p class="hint">Export format depends on browser support (usually WebM). Keep this page open while exporting. Best tested in an updated Chrome browser.</p>
+<a id="download" hidden></a>
+</section>
+</main>
+<footer>REYA · Early preview build</footer>
+<script>
+const audioInput=document.getElementById('audioFile'), imageInput=document.getElementById('imageFiles');
+const audio=document.getElementById('audioPlayer'), canvas=document.getElementById('preview'), ctx=canvas.getContext('2d');
+const statusBox=document.getElementById('status'), thumbs=document.getElementById('thumbs');
+let images=[], raf=0, recording=false, recorder=null, chunks=[], audioCtx=null, audioSource=null, audioDestination=null, startedAt=0, previewing=false;
+function status(t){statusBox.textContent=t}
+audioInput.addEventListener('change',()=>{const f=audioInput.files[0];if(!f)return;audio.src=URL.createObjectURL(f);audio.hidden=false;status('Audio ready: '+f.name)});
+imageInput.addEventListener('change',()=>{images.forEach(x=>URL.revokeObjectURL(x.src));images=[];thumbs.innerHTML='';Array.from(imageInput.files).forEach(f=>{const src=URL.createObjectURL(f),im=new Image();im.onload=()=>{};im.src=src;images.push({img:im,src});const t=new Image();t.src=src;thumbs.appendChild(t)});status(images.length+' image(s) ready.')});
+function drawCover(img,scale=1,alpha=1){const cw=canvas.width,ch=canvas.height,ratio=Math.max(cw/img.width,ch/img.height)*scale,w=img.width*ratio,h=img.height*ratio;ctx.globalAlpha=alpha;ctx.drawImage(img,(cw-w)/2,(ch-h)/2,w,h);ctx.globalAlpha=1}
+function render(now){if(!images.length){ctx.fillStyle='#090d18';ctx.fillRect(0,0,1280,720);ctx.fillStyle='#aab2c5';ctx.font='32px system-ui';ctx.textAlign='center';ctx.fillText('Your video preview will appear here',640,360);return}
+ const duration=Math.max(1,audio.duration||images.length*5),t=previewing&&audio&&!audio.paused?audio.currentTime:(now-startedAt)/1000;
+ const index=Math.min(images.length-1,Math.floor((t/duration)*images.length)),local=(t/duration*images.length)-index;
+ const im=images[index].img;
+ ctx.fillStyle='#080a10';ctx.fillRect(0,0,1280,720);
+ if(im.complete&&im.naturalWidth){const zoom=document.getElementById('zoom').value==='yes'?1+Math.max(0,Math.min(1,local))*.09:1;drawCover(im,zoom)}
+ if(document.getElementById('transition').value==='fade'&&index>0&&local<.18){const prev=images[index-1].img;if(prev.complete&&prev.naturalWidth){ctx.save();ctx.globalAlpha=1-local/.18;drawCover(prev,1);ctx.restore()}}
+ if(previewing||recording)raf=requestAnimationFrame(render);
+}
+function stop(){previewing=false;cancelAnimationFrame(raf);if(audio){audio.pause();audio.currentTime=0}status('Preview stopped.')}
+document.getElementById('previewBtn').onclick=()=>{if(!audio.src||!images.length){status('Please add audio and at least one image first.');return}stop();previewing=true;startedAt=performance.now();audio.currentTime=0;audio.play().catch(()=>{});render(performance.now());status('Preview playing.')};
+document.getElementById('stopBtn').onclick=stop;
+document.getElementById('exportBtn').onclick=async()=>{
+ if(!audio.src||!images.length){status('Please add audio and at least one image first.');return}
+ if(!('MediaRecorder'in window)||!canvas.captureStream){status('Video export is not supported in this browser. Try an updated Chrome browser on a computer.');return}
+ try{
+ stop();await audio.play().catch(()=>{});audio.pause();audio.currentTime=0;
+ audioCtx=new(window.AudioContext||window.webkitAudioContext)();await audioCtx.resume();
+ audioSource=audioCtx.createMediaElementSource(audio);audioDestination=audioCtx.createMediaStreamDestination();audioSource.connect(audioDestination);audioSource.connect(audioCtx.destination);
+ const videoStream=canvas.captureStream(30),stream=new MediaStream([...videoStream.getVideoTracks(),...audioDestination.stream.getAudioTracks()]);
+ const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(x=>MediaRecorder.isTypeSupported(x))||'';
+ recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);chunks=[];recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+ recorder.onstop=()=>{const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob),a=document.getElementById('download');a.href=url;a.download='reya-video.webm';a.hidden=false;a.textContent='Download your video';a.style.display='inline-block';a.style.marginTop='12px';a.style.color='#c9c1ff';status('Export finished. Tap “Download your video”.');stream.getTracks().forEach(t=>t.stop());audioCtx.close()};
+ recorder.start();recording=true;previewing=true;startedAt=performance.now();audio.currentTime=0;await audio.play();render(performance.now());status('Exporting… keep this page open.');audio.onended=()=>{if(recorder&&recorder.state!=='inactive')recorder.stop();recording=false;previewing=false;cancelAnimationFrame(raf);audio.onended=null};
+ }catch(e){status('Could not export on this device: '+e.message+'. Try Chrome on a computer.')}
+};
+render(0);
+</script>
+</body>
+</html>
