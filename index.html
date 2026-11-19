@@ -69,9 +69,36 @@ audioInput.addEventListener('change',()=>{const f=audioInput.files[0];if(!f)retu
 function splitSentences(text){return text.replace(/\s+/g,' ').split(/(?<=[.!?。！？])\s+|\n+/).map(s=>s.trim()).filter(s=>s.length>2).slice(0,18)}
 function searchPhrase(sentence){return sentence.replace(/[0-9]+/g,' ').replace(/[^\p{L}\p{N}\s-]/gu,' ').trim().split(/\s+/).slice(0,9).join(' ')}
 function addThumb(scene,i){const box=document.createElement('div');box.className='thumb';const im=document.createElement('img');im.src=scene.image;im.alt=scene.title||'Matched photo';const p=document.createElement('p');p.textContent='Scene '+(i+1)+': '+scene.sentence.slice(0,65);const a=document.createElement('a');a.href=scene.source;a.target='_blank';a.rel='noopener';a.textContent='Photo source';const lic=document.createElement('p');lic.textContent=(scene.creator||'Creator unknown')+' · '+(scene.license||'License details');box.append(im,p,a,lic);box.appendChild(document.createElement('br'));thumbs.appendChild(box)}
-async function getImage(sentence){const q=searchPhrase(sentence);if(!q)return null;const url='https://api.openverse.org/v1/images/?q='+encodeURIComponent(q)+'&page_size=8&license=cc0,pdm,by,by-sa&mature=false';const res=await fetch(url,{headers:{Accept:'application/json'}});if(!res.ok)throw new Error('Image search returned '+res.status);const data=await res.json();const item=(data.results||[]).find(x=>x.thumbnail&&x.foreign_landing_url&&x.license_url);if(!item)return null;const img=new Image();img.crossOrigin='anonymous';img.src=item.thumbnail;await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject});return {img,image:item.thumbnail,source:item.foreign_landing_url,title:item.title||'Openly licensed image',creator:item.creator||'Creator unknown',license:(item.license||'').toUpperCase()+' '+(item.license_version||''),licenseUrl:item.license_url,sentence}}
+async function loadImageResult(item, sentence, imageUrl, sourceUrl, license, licenseUrl, title, creator){
+ const img=new Image();img.crossOrigin='anonymous';img.src=imageUrl;
+ await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('Image file could not load'))});
+ return {img,image:imageUrl,source:sourceUrl,title:title||'Openly licensed image',creator:creator||'Creator unknown',license:license||'License details',licenseUrl:licenseUrl||sourceUrl,sentence};
+}
+async function getImage(sentence){
+ const q=searchPhrase(sentence);if(!q)return null;
+ let openverseError='';
+ try{
+  const url='https://api.openverse.org/v1/images/?q='+encodeURIComponent(q)+'&page_size=8&license=cc0,pdm,by,by-sa';
+  const res=await fetch(url,{headers:{Accept:'application/json'}});
+  if(!res.ok)throw new Error('Openverse HTTP '+res.status);
+  const data=await res.json();
+  const item=(data.results||[]).find(x=>x.thumbnail&&x.foreign_landing_url);
+  if(item)return await loadImageResult(item,sentence,item.thumbnail,item.foreign_landing_url,(item.license||'').toUpperCase()+' '+(item.license_version||''),item.license_url,item.title,item.creator);
+ }catch(e){openverseError=e.message}
+ // Public Wikimedia Commons API fallback. Search only image files and retain source/license metadata.
+ const api='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent('filetype:bitmap '+q)+'&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=900&format=json&origin=*';
+ const res=await fetch(api);
+ if(!res.ok)throw new Error('Image search services unavailable ('+res.status+'). '+openverseError);
+ const data=await res.json(),pages=Object.values(data.query?.pages||{});
+ for(const page of pages){
+  const info=page.imageinfo?.[0];if(!info?.thumburl||!info?.descriptionurl)continue;
+  const meta=info.extmetadata||{},plain=k=>(meta[k]?.value||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+  try{return await loadImageResult(page,sentence,info.thumburl,info.descriptionurl,plain('LicenseShortName')+' '+plain('LicenseVersion'),plain('LicenseUrl'),page.title?.replace(/^File:/,''),plain('Artist')||'Creator unknown')}catch(e){}
+ }
+ return null;
+}
 findBtn.onclick=async()=>{const sentences=splitSentences(scriptBox.value);if(!sentences.length){status('First paste the spoken script. Automatic transcription from audio is coming later.');return}findBtn.disabled=true;thumbs.innerHTML='';document.getElementById('credits').textContent='';scenes=[];let failed=0;for(let i=0;i<sentences.length;i++){status('Finding matching free photo '+(i+1)+' of '+sentences.length+'…');try{const scene=await getImage(sentences[i]);if(scene){scenes.push(scene);addThumb(scene,i)}else failed++}catch(e){failed++;}}
-if(scenes.length){document.getElementById('credits').innerHTML='Photo credits: '+scenes.map((s,i)=>'<span>'+ (i+1)+'. '+escapeHtml(s.title)+' — '+escapeHtml(s.creator)+' ('+escapeHtml(s.license)+')</span>').join('<br>')+'<br>Open each source link above for full license details.';status('Ready: '+scenes.length+' matching visual(s) found.'+(failed?' '+failed+' sentence(s) had no usable result.':''));render(0)}else status('No photos could be loaded. Check your internet connection and try shorter English search phrases.');findBtn.disabled=false};
+if(scenes.length){document.getElementById('credits').innerHTML='Photo credits: '+scenes.map((s,i)=>'<span>'+ (i+1)+'. '+escapeHtml(s.title)+' — '+escapeHtml(s.creator)+' ('+escapeHtml(s.license)+')</span>').join('<br>')+'<br>Open each source link above for full license details.';status('Ready: '+scenes.length+' matching visual(s) found.'+(failed?' '+failed+' sentence(s) had no usable result.':''));render(0)}else status('No matching photos found. Try shorter, simple English search terms (for example: dairy cows, village farm, tractor). If it keeps failing, the photo services may be temporarily unavailable.');findBtn.disabled=false};
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function sceneIndexAt(t,duration){if(!scenes.length)return 0;const words=scenes.map(s=>Math.max(2,s.sentence.split(/\s+/).length)),total=words.reduce((a,b)=>a+b,0),fraction=Math.max(0,Math.min(.999,t/Math.max(1,duration)));let target=fraction*total;for(let i=0;i<words.length;i++){if(target<words[i])return i;target-=words[i]}return scenes.length-1}
 function drawCover(img,scale=1,alpha=1){const cw=canvas.width,ch=canvas.height,ratio=Math.max(cw/img.width,ch/img.height)*scale,w=img.width*ratio,h=img.height*ratio;ctx.globalAlpha=alpha;ctx.drawImage(img,(cw-w)/2,(ch-h)/2,w,h);ctx.globalAlpha=1}
