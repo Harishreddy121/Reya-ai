@@ -4,7 +4,7 @@
 :root{color-scheme:dark;--bg:#090b14;--panel:#151a2b;--line:#2b334b;--muted:#929bb2;--text:#f5f6ff;--purple:#8b7cff;--cyan:#65d9e8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -5%,#29204f 0,transparent 36%),var(--bg);color:var(--text);font:14px Inter,system-ui,Arial,sans-serif;min-height:100vh}.wrap{max-width:1100px;margin:auto;padding:24px 16px 40px}.top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0 18px}.brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:900;letter-spacing:2px}.mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#a18cff,#5e55d9);display:grid;place-items:center}.tag{font-size:10px;color:#c9c2ff;border:1px solid #6e62c74d;background:#7767ff18;padding:7px 10px;border-radius:30px}.hero{padding:28px 0 20px}.eyebrow{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:2px}.hero h1{font-size:clamp(28px,5vw,42px);letter-spacing:-1.5px;margin:8px 0}.hero p{color:var(--muted);margin:0;line-height:1.6}.grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px;align-items:start}.card{background:linear-gradient(145deg,#171d30,#101523);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 12px 35px #0002}.card h2{font-size:15px;margin:0 0 5px}.muted,.hint{color:var(--muted);font-size:11px;line-height:1.6}.label{display:block;margin:15px 0 8px;font-weight:700;color:#dce1f1}select{width:100%;height:42px;background:#0b1020;border:1px solid #303951;color:#fff;border-radius:10px}textarea{width:100%;resize:vertical;min-height:210px;background:#0b1020;border:1px solid #303951;color:#fff;border-radius:10px;padding:12px;font:13px/1.7 system-ui}textarea:focus{outline:1px solid var(--purple);border-color:var(--purple)}.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:10px;background:linear-gradient(135deg,#9585ff,#6f61e8);color:#fff;font-weight:800;padding:12px 15px;cursor:pointer;font-size:12px}button.alt{background:#242c42;border:1px solid #39435d;color:#e0e4f1}button:disabled{opacity:.4;cursor:not-allowed}.record{width:100%;font-size:14px;padding:15px}.status{margin-top:10px;padding:0;border:0;background:transparent;border-radius:0;color:#cbd2e3;font-size:11px;line-height:1.6;min-height:0}.transcript{margin-top:12px;max-height:180px;overflow:auto;background:#0b1020;border:1px solid var(--line);border-radius:10px;padding:12px;color:#dce2f1;font-size:12px;line-height:1.7;white-space:pre-wrap}.preview{background:#080b13;border:1px solid #303951;border-radius:12px;overflow:hidden;margin-top:13px}.preview canvas{width:100%;aspect-ratio:16/9;display:block}.actions{display:flex;gap:9px;margin-top:12px}.actions button{flex:1}.scenes{display:grid;gap:9px;margin-top:13px;max-height:310px;overflow:auto}.scene{display:grid;grid-template-columns:82px 1fr;gap:10px;padding:9px;border:1px solid var(--line);background:#0e1423;border-radius:10px}.scene img{width:82px;height:58px;object-fit:cover;border-radius:7px;background:#20263a}.scene b{font-size:11px}.scene p{font-size:10px;color:var(--muted);line-height:1.4;margin:4px 0}.scene a{font-size:10px;color:#c9c1ff}.notice{margin-top:16px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;color:var(--muted);font-size:11px;line-height:1.6}audio{width:100%;margin-top:10px}footer{text-align:center;color:#66718a;font-size:10px;padding:25px 0 0}@media(max-width:760px){.grid{grid-template-columns:1fr}.wrap{padding:18px 12px 30px}.card{padding:15px}}
 </style></head><body><main class="wrap">
 <div class="top"><div class="brand"><div class="mark">R</div> REYA</div><span class="tag">SCRIPT → VISUAL VIDEO</span></div>
-<section class="hero"><div class="eyebrow">SCRIPT TO VIDEO</div><h1>Turn your script into a video.</h1><p>Paste your script. REYA finds matching visuals for every sentence and adds motion effects.</p></section>
+<section class="hero"><div class="eyebrow">SCRIPT TO VIDEO</div><h1>Turn your script into a video.</h1><p>Paste your script. REYA creates a cinematic AI image for every sentence and adds motion effects.</p></section>
 <div class="grid"><div class="card"><h2>1. Add your script</h2><div class="muted">Type or paste your script. REYA creates a separate visual for each sentence.</div>
 <label class="label" for="scriptInput">Your video script (optional if audio is uploaded)</label><textarea id="scriptInput" placeholder="Mee video script ikkada type or paste cheyandi..." rows="9"></textarea>
 <label class="label" for="audioInput">Or upload voice/audio</label><input id="audioInput" type="file" accept="audio/*" style="width:100%;color:#dce1f1;font-size:12px">
@@ -14,14 +14,14 @@
 <div class="status" id="status">Ready for your script.</div>
 <div class="hint">Best results kosam short, clear sentences use cheyandi. Telugu and English scripts supported where image search can find a match.</div>
 </div>
-<div class="card"><h2>2. Preview & export</h2><div class="muted">Sentence-by-sentence photos, smooth fade transitions and slow zoom-in.</div>
+<div class="card"><h2>2. Preview & export</h2><div class="muted">Unique cinematic AI images, smooth fade transitions and slow zoom-in. No subtitles.</div>
 <div class="preview"><canvas id="canvas" width="1280" height="720"></canvas></div>
 <div class="actions"><button class="alt" id="previewBtn" disabled>▶ Preview video</button><button id="exportBtn" disabled>Export video</button></div>
 <div class="status" id="exportStatus">Your visuals will appear here after generating.</div>
 <div class="scenes" id="scenes"><div class="muted">No visuals yet.</div></div>
 <a id="download" hidden style="display:inline-block;margin-top:12px;color:#c9c1ff">Download video</a>
 </div></div>
-<div class="notice"><b>How it works:</b> REYA splits your script into sentences, searches Openverse and Wikimedia Commons for related photos, then adds slow zoom and fade transitions. This is a free photo-based video workflow, not AI-generated moving video clips. Export is WebM where supported by your browser.</div>
+<div class="notice"><b>How it works:</b> REYA creates one AI-generated cinematic still image for each sentence, then adds slow zoom and fade transitions. No subtitles are added. Images are static (not AI moving-video clips). AI generation requires the Cloudflare Workers AI binding to be enabled for this site. Export is WebM where supported by your browser.</div>
 <footer>REYA · Script to visual story · Free beta</footer></main>
 <script>
 const $=id=>document.getElementById(id),canvas=$('canvas'),ctx=canvas.getContext('2d');
@@ -79,55 +79,24 @@ $('transcribeBtn').onclick=async()=>{const transcript=await transcribeAudio();if
 
 function exportStatus(t){$('exportStatus').textContent=t}
 function splitText(t){return t.replace(/\r/g,'').replace(/[ \t]+/g,' ').split(/(?<=[.!?।。！？])\s+|(?<=[.!?।。！？])(?=[^\s])/).map(x=>x.trim()).filter(x=>x.length>2).slice(0,40)}
-function queries(s){const t=s.toLowerCase(),q=[],rules=[[/పాలు|ఆవు|ఆవులు|పశువులు|డైరీ|పాడి|milk|cow|dairy/,'dairy cows milk farm'],[/రైతు|వ్యవసాయ|పంట|పొలం|farmer|farm|crop/,'Indian farmer agriculture field'],[/గొర్రె|గొర్రెలు|sheep|goat|మేక/,'sheep goat farm'],[/వ్యాపార|బిజినెస్|లాభ|ఆదాయ|business|profit|income/,'small business shop owner'],[/యంత్ర|మెషిన్|మిషన్|తయారీ|ఫ్యాక్టరీ|machine|factory/,'small manufacturing machine factory'],[/గ్రామ|పల్లె|village|rural/,'Indian village rural life'],[/మహిళ|కుట్టు|టైలరింగ్|tailoring|sewing/,'woman tailoring sewing machine'],[/ఇల్లు|నిర్మాణ|house|construction/,'rural house construction'],[/డబ్బు|బ్యాంక్|లోన్|loan|money|bank/,'small business finance banking'],[/విద్య|పాఠశాల|school|student|education/,'Indian school students classroom'],[/ఆసుపత్రి|వైద్య|డాక్టర్|hospital|doctor|health/,'doctor hospital healthcare']];for(const [re,v] of rules)if(re.test(t))q.push(v);const en=t.replace(/[^a-z0-9\s-]/g,' ').split(/\s+/).filter(x=>x.length>3&&!['this','that','with','from','will','your','they','have','their'].includes(x)).slice(0,6).join(' ');if(en)q.push(en);return [...new Set(q)].slice(0,4)}
-function loadImage(url){return new Promise((resolve,reject)=>{const im=new Image();im.crossOrigin='anonymous';im.onload=()=>resolve(im);im.onerror=reject;im.src=url})}
+function loadImage(url){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=reject;im.src=url})}
 async function findImage(sentence){
-  const qs=queries(sentence);
-  for(const q of qs){
-    try{
-      const url='https://api.openverse.org/v1/images/?q='+encodeURIComponent(q)+'&page_size=20&license=cc0,pdm,by,by-sa';
-      const r=await fetch(url);
-      if(r.ok){
-        const d=await r.json();
-        for(const x of d.results||[]){
-          const src=x.thumbnail||x.url;
-          const key=x.id||src;
-          if(!src||!x.foreign_landing_url||usedImages.has(key)||usedImages.has(src))continue;
-          try{
-            const img=await loadImage(src);
-            usedImages.add(key);usedImages.add(src);
-            return {sentence,img,source:x.foreign_landing_url,license:x.license||'Openverse'};
-          }catch(e){}
-        }
-      }
-    }catch(e){}
-    try{
-      const url='https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(q)+'&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url&iiurlwidth=1000&format=json&origin=*';
-      const r=await fetch(url);
-      if(r.ok){
-        const d=await r.json();
-        for(const p of Object.values(d.query?.pages||{})){
-          const x=p.imageinfo?.[0],src=x?.thumburl,key=p.pageid||src;
-          if(!src||!x.descriptionurl||usedImages.has(key)||usedImages.has(src))continue;
-          try{
-            const img=await loadImage(src);
-            usedImages.add(key);usedImages.add(src);
-            return {sentence,img,source:x.descriptionurl,license:'Wikimedia Commons'};
-          }catch(e){}
-        }
-      }
-    }catch(e){}
-  }
-  return null
+  const prompt='Create one cinematic, photorealistic documentary-style still image for this exact scene: '+sentence+'. Set in a believable contemporary Indian setting when relevant. Wide 16:9 landscape composition, natural realistic lighting, detailed environment, professional film color grading, clear main subject, no text, no subtitles, no logos, no watermark.';
+  const response=await fetch('/api/generate-image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||'AI image service is not ready.');
+  if(!data.image)throw new Error('AI image response was empty.');
+  const img=await loadImage(data.image);
+  return {sentence,img,source:'',license:'AI generated'};
 }
 function drawImage(im,scale=1,alpha=1){const W=canvas.width,H=canvas.height,r=Math.max(W/im.width,H/im.height)*scale,w=im.width*r,h=im.height*r;ctx.globalAlpha=alpha;ctx.drawImage(im,(W-w)/2,(H-h)/2,w,h);ctx.globalAlpha=1}
 function drawAt(seconds){const W=canvas.width,H=canvas.height;ctx.fillStyle='#080b13';ctx.fillRect(0,0,W,H);if(!scenes.length){ctx.fillStyle='#aab2c5';ctx.textAlign='center';ctx.font='28px system-ui';ctx.fillText('Your video preview will appear here',W/2,H/2);return}
 const total=scenes.length*SCENE_SECONDS,t=Math.max(0,Math.min(seconds,total-.001)),index=Math.min(scenes.length-1,Math.floor(t/SCENE_SECONDS)),local=t-index*SCENE_SECONDS,s=scenes[index],zoom=1+Math.min(1,local/SCENE_SECONDS)*.09;
 if(index>0&&local<FADE_SECONDS){drawImage(scenes[index-1].img,1.07,.35*(1-local/FADE_SECONDS));drawImage(s.img,zoom,local/FADE_SECONDS)}else drawImage(s.img,zoom,1);
-const text=s.sentence||'';ctx.fillStyle='rgba(0,0,0,.62)';ctx.fillRect(0,H-132,W,132);ctx.fillStyle='#fff';ctx.textAlign='left';ctx.font='bold 29px system-ui';const words=text.split(/\s+/);let line='',lines=[],max=76;for(const word of words){if((line+' '+word).trim().length>max){lines.push(line);line=word}else line=(line+' '+word).trim()}if(line)lines.push(line);lines.slice(0,2).forEach((v,i)=>ctx.fillText(v,42,H-78+i*38))}
-function renderScenes(){$('scenes').innerHTML=scenes.length?scenes.map((s,i)=>'<div class="scene"><img src="'+s.img.src+'" alt=""><div><b>Scene '+(i+1)+'</b><p>'+s.sentence.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))+'</p><a href="'+s.source+'" target="_blank" rel="noopener">Photo source · '+s.license+'</a></div></div>').join(''):'<div class="muted">No visuals yet.</div>';$('previewBtn').disabled=!scenes.length;$('exportBtn').disabled=!scenes.length}
+}
+function renderScenes(){$('scenes').innerHTML=scenes.length?scenes.map((s,i)=>'<div class="scene"><img src="'+s.img.src+'" alt=""><div><b>Scene '+(i+1)+'</b><p>'+s.license+'</p></div></div>').join(''):'<div class="muted">No visuals yet.</div>';$('previewBtn').disabled=!scenes.length;$('exportBtn').disabled=!scenes.length}
 function animate(){if(!playing)return;const elapsed=(performance.now()-startAt)/1000;drawAt(elapsed);if(elapsed>=scenes.length*SCENE_SECONDS){playing=false;drawAt(0);return}raf=requestAnimationFrame(animate)}
-$('generateBtn').onclick=async()=>{let raw=$('scriptInput').value.trim();if(!raw&&$('audioInput').files?.length){raw=await transcribeAudio()||$('scriptInput').value.trim()}if(!raw){status('Please type a script or upload an audio file, then try again.');return}playing=false;cancelAnimationFrame(raf);scenes=[];usedImages.clear();renderScenes();const sentences=splitText(raw);if(!sentences.length){status('Please enter a few complete sentences.');return}$('generateBtn').disabled=true;let missed=0;for(let i=0;i<sentences.length;i++){status('Finding matching visual '+(i+1)+' of '+sentences.length+'…');const scene=await findImage(sentences[i]);if(scene)scenes.push(scene);else missed++;renderScenes();drawAt(0)}$('generateBtn').disabled=false;if(scenes.length){status(scenes.length+' visuals ready. '+(missed?missed+' sentence(s) had no matching photo.':''));exportStatus('Preview is ready. Play it or export your video.');drawAt(0)}else{status('No matching photos could be loaded. Check internet and try shorter, clearer sentences.');exportStatus('No visuals found. Try again with simpler sentences.')}}
+$('generateBtn').onclick=async()=>{let raw=$('scriptInput').value.trim();if(!raw&&$('audioInput').files?.length){raw=await transcribeAudio()||$('scriptInput').value.trim()}if(!raw){status('Please type a script or upload an audio file, then try again.');return}playing=false;cancelAnimationFrame(raf);scenes=[];usedImages.clear();renderScenes();const sentences=splitText(raw);if(!sentences.length){status('Please enter a few complete sentences.');return}$('generateBtn').disabled=true;let missed=0;for(let i=0;i<sentences.length;i++){status('Generating cinematic AI image '+(i+1)+' of '+sentences.length+'…');try{const scene=await findImage(sentences[i]);if(scene)scenes.push(scene);else missed++}catch(e){missed++;status('Scene '+(i+1)+' failed: '+e.message)}renderScenes();drawAt(0)}$('generateBtn').disabled=false;if(scenes.length){status(scenes.length+' AI visuals ready. '+(missed?missed+' scene(s) could not be generated.':''));exportStatus('Preview is ready. Play it or export your video.');drawAt(0)}else{status('No AI images generated. Make sure the Cloudflare Workers AI binding is enabled.');exportStatus('AI image service is not connected yet.')}}
 $('previewBtn').onclick=()=>{if(!scenes.length)return;playing=false;cancelAnimationFrame(raf);startAt=performance.now();playing=true;animate();exportStatus('Preview playing…')};
 $('clearBtn').onclick=()=>{playing=false;cancelAnimationFrame(raf);scenes=[];$('scriptInput').value='';$('audioInput').value='';$('download').hidden=true;renderScenes();drawAt(0);status('Ready. Paste a new script to begin.');exportStatus('Your visuals will appear here after generating.')};
 $('exportBtn').onclick=()=>{if(!scenes.length)return;if(!window.MediaRecorder||!canvas.captureStream){exportStatus('Video export is not supported in this browser. Try updated Chrome.');return}try{playing=false;cancelAnimationFrame(raf);const stream=canvas.captureStream(30),mime=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));const rec=new MediaRecorder(stream,mime?{mimeType:mime}:{}),chunks=[];rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};rec.onstop=()=>{const url=URL.createObjectURL(new Blob(chunks,{type:rec.mimeType||'video/webm'}));$('download').href=url;$('download').download='reya-script-video.webm';$('download').hidden=false;exportStatus('Video export complete. Tap Download video.');stream.getTracks().forEach(t=>t.stop());drawAt(0)};rec.start();let frame=0;const render=()=>{if(frame>=scenes.length*SCENE_SECONDS){rec.stop();return}drawAt(frame);frame+=1/30;setTimeout(render,1000/30)};exportStatus('Exporting video… keep this page open.');render()}catch(e){exportStatus('Could not export: '+e.message)}};
