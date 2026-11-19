@@ -34,22 +34,22 @@ footer{text-align:center;color:#68738b;font-size:10px;padding:26px 0 0}
   <div class="brand"><div class="brandmark">R</div><div><div class="brandname">REYA</div><small>CREATIVE STUDIO</small></div></div>
   <div><div class="navlabel">WORKSPACE</div><nav class="nav">
     <a class="active" href="#audio"><span class="navicon">◈</span><span class="navtext">Video Studio</span></a>
-    <a href="#script"><span class="navicon">▤</span><span class="navtext">Script & Visuals</span></a>
+    <a href="#scriptSection"><span class="navicon">▤</span><span class="navtext">Script & Visuals</span></a>
     <a href="#previewSection"><span class="navicon">▷</span><span class="navtext">Preview & Export</span></a>
   </nav></div>
   <div class="sidebottom"><strong>REYA Studio</strong><p>Turn your narration into a visual story. More creative tools coming soon.</p></div>
 </aside>
 <div class="content">
   <div class="topbar"><div class="crumb">Workspace <span> / </span> <b>Video Studio</b></div><div class="topright"><span class="pill">BETA · FREE VISUALS</span><div class="avatar">R</div></div></div>
-  <section class="hero"><div><div class="eyebrow">Your creative workspace</div><h1>Make your next video.</h1><p>Bring your voice and script together. REYA helps arrange visuals for your story.</p></div><div class="hero-tag">✦ 16:9 VIDEO WORKSPACE</div></section>
+  <section class="hero"><div><div class="eyebrow">Your creative workspace</div><h1>Turn your script into a video.</h1><p>Paste your story, add your voice, and let REYA find matching visuals scene by scene.</p></div><div class="hero-tag">✦ 16:9 VIDEO WORKSPACE</div></section>
   <div class="workspace">
     <div class="leftcol">
-      <section class="card" id="audio"><div class="cardhead"><div class="cardtitle"><div class="step">01</div><div><h2>Add your voice</h2><div class="sub">Upload your narration audio</div></div></div><span class="sub">MP3 · WAV · M4A</span></div>
+      <section class="card" id="audio"><div class="cardhead"><div class="cardtitle"><div class="step">02</div><div><h2>Add your voice</h2><div class="sub">Optional while preparing scenes · needed for voice-synced export</div></div></div><span class="sub">MP3 · WAV · M4A</span></div>
         <label for="audioFile">Choose audio file</label><input id="audioFile" type="file" accept="audio/*"><audio id="audioPlayer" controls hidden></audio><div class="uploadhint">♫ Your original voice recording will be used in the final video.</div>
       </section>
-      <section class="card" id="script"><div class="cardhead"><div class="cardtitle"><div class="step">02</div><div><h2>Script & visuals</h2><div class="sub">Add what is spoken in your audio</div></div></div></div>
-        <label for="script">Paste your video script</label><textarea id="script" placeholder="Paste your narration here. Separate sentences with full stops or put each sentence on a new line."></textarea>
-        <p class="hint">REYA searches openly licensed stock photos based on your script. Automatic speech-to-text and AI-generated visuals are not available yet.</p>
+      <section class="card" id="scriptSection"><div class="cardhead"><div class="cardtitle"><div class="step">01</div><div><h2>Write your script</h2><div class="sub">Your script becomes the visual scene plan</div></div></div></div>
+        <label for="scriptInput">Paste your video script</label><textarea id="scriptInput" placeholder="Example: A small dairy farm can become a good business. Start with two healthy cows. Sell fresh milk in your village. REYA will find visuals for each sentence."></textarea>
+        <p class="hint">REYA splits your script into sentences and searches openly licensed photos for each scene. This version finds existing photos; AI image generation and automatic voice creation are not active yet.</p>
         <div class="actions"><button id="findBtn">✦ Find matching visuals</button></div><div class="featureline"><span>Open-license photos</span><span>Automatic scene search</span><span>Source credits</span></div>
         <div id="thumbs"></div><div id="credits"></div>
       </section>
@@ -59,7 +59,7 @@ footer{text-align:center;color:#68738b;font-size:10px;padding:26px 0 0}
         <div class="previewwrap"><canvas id="preview" width="1280" height="720"></canvas></div>
         <div class="actions"><button id="previewBtn">▷ Preview</button><button class="secondary" id="stopBtn">Stop</button></div>
         <div class="actions"><button id="exportBtn" style="width:100%">Export video ↗</button></div>
-        <div class="status" id="status">Upload audio, paste your script, then find matching visuals.</div>
+        <div class="status" id="status">Paste your script, find matching visuals, then add your narration audio for preview and export.</div>
         <p class="hint">Export format depends on browser support (usually WebM). Keep this page open while exporting.</p><a id="download" hidden></a>
       </section>
       <section class="card"><div class="cardhead"><div class="cardtitle"><div class="step">✦</div><div><h2>Coming next</h2><div class="sub">Planned REYA features</div></div></div></div><div class="featureline"><span>AI image generation</span><span>AI video scenes</span><span>Auto voice transcription</span><span>MP4 export</span></div><p class="hint">These are planned features, not active yet. We'll add them step by step.</p></section>
@@ -72,7 +72,7 @@ footer{text-align:center;color:#68738b;font-size:10px;padding:26px 0 0}
 const audioInput=document.getElementById('audioFile'),audio=document.getElementById('audioPlayer');
 const canvas=document.getElementById('preview'),ctx=canvas.getContext('2d');
 const statusBox=document.getElementById('status'),thumbs=document.getElementById('thumbs');
-const scriptBox=document.getElementById('script'),findBtn=document.getElementById('findBtn');
+const scriptBox=document.getElementById('scriptInput'),findBtn=document.getElementById('findBtn');
 let scenes=[],raf=0,recorder=null,chunks=[],audioCtx=null,previewing=false,recording=false;
 function status(t){statusBox.textContent=t}
 audioInput.addEventListener('change',()=>{const f=audioInput.files[0];if(!f)return;audio.src=URL.createObjectURL(f);audio.hidden=false;status('Audio ready: '+f.name)});
@@ -135,9 +135,9 @@ function sceneIndexAt(t,duration){if(!scenes.length)return 0;const words=scenes.
 function drawCover(img,scale=1,alpha=1){const cw=canvas.width,ch=canvas.height,ratio=Math.max(cw/img.width,ch/img.height)*scale,w=img.width*ratio,h=img.height*ratio;ctx.globalAlpha=alpha;ctx.drawImage(img,(cw-w)/2,(ch-h)/2,w,h);ctx.globalAlpha=1}
 function render(){ctx.fillStyle='#080a10';ctx.fillRect(0,0,1280,720);if(!scenes.length){ctx.fillStyle='#aab2c5';ctx.font='30px system-ui';ctx.textAlign='center';ctx.fillText('Your matched visuals will appear here',640,360);return}const duration=Math.max(1,audio.duration||scenes.length*5),t=audio&&!audio.paused?audio.currentTime:0,index=sceneIndexAt(t,duration),scene=scenes[index];if(scene&&scene.img.complete)drawCover(scene.img,1+((t%duration)/duration)*.04);if(previewing||recording)raf=requestAnimationFrame(render)}
 function stop(){previewing=false;cancelAnimationFrame(raf);if(audio){audio.pause();audio.currentTime=0}status('Preview stopped.')}
-document.getElementById('previewBtn').onclick=()=>{if(!audio.src||!scenes.length){status('Add audio and find visuals first.');return}stop();previewing=true;audio.currentTime=0;audio.play().catch(()=>{});render();status('Preview playing.')};
+document.getElementById('previewBtn').onclick=()=>{if(!audio.src||!scenes.length){status('Add narration audio and find visuals first.');return}stop();previewing=true;audio.currentTime=0;audio.play().catch(()=>{});render();status('Preview playing.')};
 document.getElementById('stopBtn').onclick=stop;
-document.getElementById('exportBtn').onclick=async()=>{if(!audio.src||!scenes.length){status('Add audio and find visuals first.');return}if(!('MediaRecorder'in window)||!canvas.captureStream){status('Video export is not supported in this browser. Try updated Chrome.');return}try{stop();audioCtx=new(window.AudioContext||window.webkitAudioContext)();await audioCtx.resume();const source=audioCtx.createMediaElementSource(audio),dest=audioCtx.createMediaStreamDestination();source.connect(dest);source.connect(audioCtx.destination);const video=canvas.captureStream(30),stream=new MediaStream([...video.getVideoTracks(),...dest.stream.getAudioTracks()]);const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(x=>MediaRecorder.isTypeSupported(x))||'';recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);chunks=[];recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob),a=document.getElementById('download');a.href=url;a.download='reya-video.webm';a.hidden=false;a.textContent='Download your video';a.style.display='inline-block';a.style.marginTop='12px';a.style.color='#c9c1ff';status('Export finished. Tap Download your video.');stream.getTracks().forEach(t=>t.stop());audioCtx.close()};recorder.start();recording=true;previewing=true;audio.currentTime=0;await audio.play();render();status('Exporting… keep this page open.');audio.onended=()=>{if(recorder&&recorder.state!=='inactive')recorder.stop();recording=false;previewing=false;cancelAnimationFrame(raf);audio.onended=null}}catch(e){status('Could not export on this device: '+e.message)}};render();
+document.getElementById('exportBtn').onclick=async()=>{if(!audio.src||!scenes.length){status('Add narration audio and find visuals first.');return}if(!('MediaRecorder'in window)||!canvas.captureStream){status('Video export is not supported in this browser. Try updated Chrome.');return}try{stop();audioCtx=new(window.AudioContext||window.webkitAudioContext)();await audioCtx.resume();const source=audioCtx.createMediaElementSource(audio),dest=audioCtx.createMediaStreamDestination();source.connect(dest);source.connect(audioCtx.destination);const video=canvas.captureStream(30),stream=new MediaStream([...video.getVideoTracks(),...dest.stream.getAudioTracks()]);const mime=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(x=>MediaRecorder.isTypeSupported(x))||'';recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);chunks=[];recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};recorder.onstop=()=>{const blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob),a=document.getElementById('download');a.href=url;a.download='reya-video.webm';a.hidden=false;a.textContent='Download your video';a.style.display='inline-block';a.style.marginTop='12px';a.style.color='#c9c1ff';status('Export finished. Tap Download your video.');stream.getTracks().forEach(t=>t.stop());audioCtx.close()};recorder.start();recording=true;previewing=true;audio.currentTime=0;await audio.play();render();status('Exporting… keep this page open.');audio.onended=()=>{if(recorder&&recorder.state!=='inactive')recorder.stop();recording=false;previewing=false;cancelAnimationFrame(raf);audio.onended=null}}catch(e){status('Could not export on this device: '+e.message)}};render();
 </script>
 </body>
 </html>
