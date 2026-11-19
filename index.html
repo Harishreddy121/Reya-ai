@@ -3,61 +3,71 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10131f">
-<title>REYA — Voice to Video</title>
+<meta name="theme-color" content="#0b0d17">
+<title>REYA — AI Video Studio</title>
 <style>
-:root{color-scheme:dark;--bg:#0b0e17;--panel:#151a29;--line:#293148;--muted:#aab2c5;--accent:#8b7cff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0,#24204a 0,transparent 36%),var(--bg);color:#f7f7fb;font:15px system-ui,Arial,sans-serif}
-header{padding:25px 18px 18px;max-width:1000px;margin:auto}header .brand{font-size:28px;font-weight:850;letter-spacing:3px}header p{color:var(--muted);margin:5px 0}
-main{max-width:1000px;margin:auto;padding:0 14px 40px;display:grid;gap:14px}.card{background:rgba(21,26,41,.96);border:1px solid var(--line);border-radius:17px;padding:17px}
-h2{font-size:17px;margin:0 0 13px}label{display:block;font-weight:650;margin:12px 0 7px}
-input[type=file],textarea{width:100%;border:1px solid #38425b;background:#0e1320;color:white;border-radius:10px;padding:11px}
-textarea{min-height:125px;resize:vertical;line-height:1.5}
-small,.hint{color:var(--muted);line-height:1.5}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-button{border:0;border-radius:11px;padding:12px 16px;background:var(--accent);color:white;font-weight:750;font-size:15px;cursor:pointer}
-button.secondary{background:#293148}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
-canvas{width:100%;aspect-ratio:16/9;background:#070910;border-radius:12px;display:block}
-audio{width:100%;margin-top:10px}.status{padding:10px 12px;border:1px solid var(--line);border-radius:10px;color:#cbd2e3;margin-top:12px;min-height:42px}
-#thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}
-.thumb{background:#0e1320;border:1px solid var(--line);border-radius:10px;padding:7px;min-width:0}
-.thumb img{width:100%;height:85px;object-fit:cover;border-radius:7px}.thumb p{font-size:11px;color:var(--muted);margin:5px 0;line-height:1.35}
-.thumb a,.credits a{color:#c9c1ff}#credits{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:5px 15px 25px}
-@media(max-width:600px){.row{grid-template-columns:1fr}header{padding-top:19px}}
+:root{color-scheme:dark;--bg:#090b14;--panel:#121625;--panel2:#171c2e;--line:#262d43;--muted:#929bb2;--text:#f5f6ff;--purple:#8b7cff;--cyan:#65d9e8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 78% -10%,#27204e 0,transparent 34%),var(--bg);color:var(--text);font:14px Inter,system-ui,Arial,sans-serif;min-height:100vh}
+.app{max-width:1440px;margin:auto;min-height:100vh;display:grid;grid-template-columns:230px minmax(0,1fr)}
+.sidebar{border-right:1px solid var(--line);padding:26px 16px;background:rgba(10,12,22,.72);display:flex;flex-direction:column;gap:28px}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px}.brandmark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#a18cff,#5e55d9);display:grid;place-items:center;font-weight:900;font-size:18px;box-shadow:0 8px 24px #7767ff40}.brandname{font-size:20px;font-weight:850;letter-spacing:2.5px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.4px;font-weight:600;margin-top:2px}
+.navlabel{font-size:10px;letter-spacing:1.5px;color:#66708a;font-weight:800;padding:0 12px;margin-bottom:8px}.nav{display:grid;gap:6px}.nav a{color:#aeb6cc;text-decoration:none;padding:11px 12px;border-radius:10px;display:flex;align-items:center;gap:11px;font-weight:600}.nav a.active{color:#fff;background:linear-gradient(90deg,#7667ed30,#7667ed0b);border:1px solid #7164d84d}.navicon{width:20px;text-align:center;font-size:16px}.sidebottom{margin-top:auto;border:1px solid var(--line);border-radius:14px;padding:13px;background:#111626}.sidebottom strong{font-size:12px}.sidebottom p{color:var(--muted);font-size:11px;line-height:1.5;margin:7px 0 0}
+.content{min-width:0;padding:26px clamp(16px,3vw,42px) 40px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.crumb{color:var(--muted);font-size:12px}.crumb b{color:#fff}.topright{display:flex;align-items:center;gap:10px}.pill{font-size:11px;color:#c7c0ff;border:1px solid #6e62c74d;background:#7767ff18;padding:7px 11px;border-radius:99px}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#242a40;color:#d9d4ff;font-weight:800}
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}.eyebrow{color:var(--cyan);font-size:10px;letter-spacing:1.8px;font-weight:800;text-transform:uppercase}.hero h1{font-size:clamp(26px,4vw,36px);letter-spacing:-1.2px;margin:8px 0 7px}.hero p{color:var(--muted);margin:0;line-height:1.55}.hero-tag{border:1px solid var(--line);background:#121727;border-radius:12px;padding:10px 13px;color:#aeb8d0;font-size:11px;white-space:nowrap}
+.workspace{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:16px;align-items:start}.leftcol,.rightcol{display:grid;gap:16px}.card{background:linear-gradient(145deg,#151a2b,#101523);border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:0 12px 35px #00000014}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.cardtitle{display:flex;align-items:center;gap:10px}.step{width:27px;height:27px;border-radius:9px;background:#7667ff24;color:#bdb5ff;display:grid;place-items:center;font-weight:800;font-size:12px}.card h2{font-size:15px;margin:0;letter-spacing:-.2px}.sub{color:var(--muted);font-size:11px}
+label{display:block;font-weight:650;margin:13px 0 8px;color:#d9deed}input[type=file],textarea{width:100%;border:1px solid #303951;background:#0c1120;color:#fff;border-radius:11px;padding:12px;font:inherit}input[type=file]{font-size:12px}textarea{min-height:150px;resize:vertical;line-height:1.6}textarea:focus,input:focus{outline:2px solid #887aff66;border-color:#887aff}
+.hint{color:var(--muted);font-size:11px;line-height:1.55;margin:9px 0 0}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}button{border:0;border-radius:10px;padding:11px 15px;background:linear-gradient(135deg,#9585ff,#6f61e8);color:#fff;font-weight:750;font-size:12px;cursor:pointer;box-shadow:0 7px 18px #7869ed26}button.secondary{background:#252d43;color:#d9def0;box-shadow:none;border:1px solid #343d55}button:disabled{opacity:.45;cursor:not-allowed}
+audio{width:100%;margin-top:12px;height:38px}.uploadhint{margin-top:10px;padding:11px 12px;border:1px dashed #39415a;border-radius:10px;color:#909bb5;font-size:11px;line-height:1.5}
+.previewwrap{background:#080b13;border:1px solid #252d43;border-radius:12px;padding:8px}canvas{width:100%;aspect-ratio:16/9;background:#070910;border-radius:8px;display:block}
+.status{padding:11px 12px;border:1px solid #303951;border-radius:10px;color:#cbd2e3;background:#0d1321;margin-top:12px;min-height:42px;font-size:11px;line-height:1.5}
+#thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:13px}.thumb{background:#0c1120;border:1px solid var(--line);border-radius:10px;padding:7px;min-width:0}.thumb img{width:100%;height:85px;object-fit:cover;border-radius:7px}.thumb p{font-size:10px;color:var(--muted);margin:5px 0;line-height:1.35}.thumb a,.credits a{color:#c9c1ff}#credits{font-size:11px;color:var(--muted);line-height:1.6;margin-top:12px}
+.featureline{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.featureline span{font-size:10px;color:#aab4cb;background:#20263a;padding:6px 9px;border-radius:99px}
+footer{text-align:center;color:#68738b;font-size:10px;padding:26px 0 0}
+@media(max-width:900px){.app{grid-template-columns:76px minmax(0,1fr)}.sidebar{padding:22px 10px;align-items:center}.brand{padding:0}.brandname,.brand small,.navlabel,.navtext,.sidebottom{display:none}.nav a{justify-content:center;padding:12px}.navicon{font-size:18px}.workspace{grid-template-columns:1fr}}
+@media(max-width:560px){.app{display:block}.sidebar{display:none}.content{padding:17px 13px 30px}.topbar{margin-bottom:22px}.hero{display:block}.hero-tag{display:inline-block;margin-top:13px}.card{padding:15px}.workspace{grid-template-columns:1fr}.actions button{flex:1}.topright .pill{display:none}}
 </style>
 </head>
 <body>
-<header><div class="brand">REYA</div><p>Turn your voice into a visual story.</p></header>
-<main>
-<section class="card">
-<h2>1. Add your voice</h2>
-<label for="audioFile">Audio file (MP3 / WAV / M4A)</label>
-<input id="audioFile" type="file" accept="audio/*">
-<audio id="audioPlayer" controls hidden></audio>
-<p class="hint">Your original audio is kept for the final video.</p>
-</section>
-<section class="card">
-<h2>2. Add your script</h2>
-<textarea id="script" placeholder="Paste the words spoken in your audio. Put each sentence on a new line, or separate sentences with full stops."></textarea>
-<p class="hint">For this first automatic-visual version, REYA uses your script to search for matching openly licensed photos. Automatic speech-to-text from the audio file is not connected yet.</p>
-<div class="actions"><button id="findBtn">Find free visuals automatically</button></div>
-<div id="thumbs"></div>
-<div id="credits"></div>
-</section>
-<section class="card">
-<h2>3. Preview and export</h2>
-<canvas id="preview" width="1280" height="720"></canvas>
-<div class="actions">
-<button id="previewBtn">Start preview</button>
-<button class="secondary" id="stopBtn">Stop</button>
-<button id="exportBtn">Export video</button>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="brandmark">R</div><div><div class="brandname">REYA</div><small>CREATIVE STUDIO</small></div></div>
+  <div><div class="navlabel">WORKSPACE</div><nav class="nav">
+    <a class="active" href="#audio"><span class="navicon">◈</span><span class="navtext">Video Studio</span></a>
+    <a href="#script"><span class="navicon">▤</span><span class="navtext">Script & Visuals</span></a>
+    <a href="#previewSection"><span class="navicon">▷</span><span class="navtext">Preview & Export</span></a>
+  </nav></div>
+  <div class="sidebottom"><strong>REYA Studio</strong><p>Turn your narration into a visual story. More creative tools coming soon.</p></div>
+</aside>
+<div class="content">
+  <div class="topbar"><div class="crumb">Workspace <span> / </span> <b>Video Studio</b></div><div class="topright"><span class="pill">BETA · FREE VISUALS</span><div class="avatar">R</div></div></div>
+  <section class="hero"><div><div class="eyebrow">Your creative workspace</div><h1>Make your next video.</h1><p>Bring your voice and script together. REYA helps arrange visuals for your story.</p></div><div class="hero-tag">✦ 16:9 VIDEO WORKSPACE</div></section>
+  <div class="workspace">
+    <div class="leftcol">
+      <section class="card" id="audio"><div class="cardhead"><div class="cardtitle"><div class="step">01</div><div><h2>Add your voice</h2><div class="sub">Upload your narration audio</div></div></div><span class="sub">MP3 · WAV · M4A</span></div>
+        <label for="audioFile">Choose audio file</label><input id="audioFile" type="file" accept="audio/*"><audio id="audioPlayer" controls hidden></audio><div class="uploadhint">♫ Your original voice recording will be used in the final video.</div>
+      </section>
+      <section class="card" id="script"><div class="cardhead"><div class="cardtitle"><div class="step">02</div><div><h2>Script & visuals</h2><div class="sub">Add what is spoken in your audio</div></div></div></div>
+        <label for="script">Paste your video script</label><textarea id="script" placeholder="Paste your narration here. Separate sentences with full stops or put each sentence on a new line."></textarea>
+        <p class="hint">REYA searches openly licensed stock photos based on your script. Automatic speech-to-text and AI-generated visuals are not available yet.</p>
+        <div class="actions"><button id="findBtn">✦ Find matching visuals</button></div><div class="featureline"><span>Open-license photos</span><span>Automatic scene search</span><span>Source credits</span></div>
+        <div id="thumbs"></div><div id="credits"></div>
+      </section>
+    </div>
+    <div class="rightcol">
+      <section class="card" id="previewSection"><div class="cardhead"><div class="cardtitle"><div class="step">03</div><div><h2>Preview & export</h2><div class="sub">Review your visual sequence</div></div></div><span class="sub">16:9</span></div>
+        <div class="previewwrap"><canvas id="preview" width="1280" height="720"></canvas></div>
+        <div class="actions"><button id="previewBtn">▷ Preview</button><button class="secondary" id="stopBtn">Stop</button></div>
+        <div class="actions"><button id="exportBtn" style="width:100%">Export video ↗</button></div>
+        <div class="status" id="status">Upload audio, paste your script, then find matching visuals.</div>
+        <p class="hint">Export format depends on browser support (usually WebM). Keep this page open while exporting.</p><a id="download" hidden></a>
+      </section>
+      <section class="card"><div class="cardhead"><div class="cardtitle"><div class="step">✦</div><div><h2>Coming next</h2><div class="sub">Planned REYA features</div></div></div></div><div class="featureline"><span>AI image generation</span><span>AI video scenes</span><span>Auto voice transcription</span><span>MP4 export</span></div><p class="hint">These are planned features, not active yet. We'll add them step by step.</p></section>
+    </div>
+  </div>
+  <footer>REYA · Voice to visual story · Beta</footer>
 </div>
-<div class="status" id="status">Upload audio, paste its script, then find visuals automatically.</div>
-<p class="hint">Images are searched through Openverse and Wikimedia Commons. Each result's source and license are shown below; check the license and keep attribution when required. Export format depends on browser support (usually WebM). Keep this page open while exporting.</p>
-<a id="download" hidden></a>
-</section>
-</main>
-<footer>REYA · Automatic stock-visual preview</footer>
+</div>
 <script>
 const audioInput=document.getElementById('audioFile'),audio=document.getElementById('audioPlayer');
 const canvas=document.getElementById('preview'),ctx=canvas.getContext('2d');
