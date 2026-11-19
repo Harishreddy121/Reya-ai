@@ -6,7 +6,10 @@
 <div class="top"><div class="brand"><div class="mark">R</div> REYA</div><span class="tag">SCRIPT → VISUAL VIDEO</span></div>
 <section class="hero"><div class="eyebrow">SCRIPT TO VIDEO</div><h1>Turn your script into a video.</h1><p>Paste your script. REYA finds matching visuals for every sentence and adds motion effects.</p></section>
 <div class="grid"><div class="card"><h2>1. Add your script</h2><div class="muted">Type or paste your script. REYA creates a separate visual for each sentence.</div>
-<label class="label" for="scriptInput">Your video script</label><textarea id="scriptInput" placeholder="Mee video script ikkada type or paste cheyandi..." rows="12"></textarea>
+<label class="label" for="scriptInput">Your video script (optional if audio is uploaded)</label><textarea id="scriptInput" placeholder="Mee video script ikkada type or paste cheyandi..." rows="9"></textarea>
+<label class="label" for="audioInput">Or upload voice/audio</label><input id="audioInput" type="file" accept="audio/*" style="width:100%;color:#dce1f1;font-size:12px">
+<div class="hint">Audio upload chesthe REYA browser lo speech ni text ga convert chesi visuals prepare chesthundhi. First use lo speech model download avuthundhi.</div>
+<div class="buttons"><button class="alt" id="transcribeBtn" type="button">Convert audio to script</button></div>
 <div class="buttons"><button id="generateBtn" class="record">✦ Generate visuals</button><button class="alt" id="clearBtn">Clear</button></div>
 <div class="status" id="status">Ready for your script.</div>
 <div class="hint">Best results kosam short, clear sentences use cheyandi. Telugu and English scripts supported where image search can find a match.</div>
@@ -22,9 +25,46 @@
 <footer>REYA · Script to visual story · Free beta</footer></main>
 <script>
 const $=id=>document.getElementById(id),canvas=$('canvas'),ctx=canvas.getContext('2d');
-let scenes=[],usedImages=new Set(),raf=0,playing=false,startAt=0,exporting=false;
+let scenes=[],usedImages=new Set(),raf=0,playing=false,startAt=0,exporting=false,asr=null;
 const SCENE_SECONDS=4,FADE_SECONDS=.65;
 function status(t){$('status').textContent=t}
+async function audioToFloat(file){
+  const bytes=await file.arrayBuffer();
+  const AudioCtx=window.AudioContext||window.webkitAudioContext;
+  const ac=new AudioCtx();
+  const decoded=await ac.decodeAudioData(bytes);
+  const targetRate=16000,src=decoded.getChannelData(0);
+  const length=Math.floor(src.length*targetRate/decoded.sampleRate);
+  const out=new Float32Array(length);
+  const ratio=decoded.sampleRate/targetRate;
+  for(let i=0;i<length;i++){const pos=i*ratio,left=Math.floor(pos),right=Math.min(left+1,src.length-1),mix=pos-left;out[i]=src[left]*(1-mix)+src[right]*mix}
+  await ac.close();return out;
+}
+async function transcribeAudio(){
+  const file=$('audioInput').files?.[0];
+  if(!file){status('Please choose an audio file first.');return}
+  if(!file.type.startsWith('audio/')){status('Please upload an audio file.');return}
+  const btn=$('transcribeBtn');btn.disabled=true;
+  try{
+    status('Loading free speech model. First use may download around 75 MB…');
+    if(!asr){
+      const {pipeline,env}=await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+      env.allowLocalModels=false;env.useBrowserCache=true;
+      asr=await pipeline('automatic-speech-recognition','Xenova/whisper-tiny',{quantized:true,progress_callback:p=>{if(p.status==='downloading'||p.status==='progress')status('Downloading speech model… '+(p.progress?Math.round(p.progress)+'%':'')}})
+    }
+    status('Reading audio and converting speech to text…');
+    const audio=await audioToFloat(file);
+    const result=await asr(audio,{chunk_length_s:25,stride_length_s:5, task:'transcribe'});
+    const transcript=(result.text||'').trim();
+    if(!transcript){status('Could not recognize speech. Try a clearer audio recording.');return}
+    $('scriptInput').value=transcript;
+    status('Audio converted to script. Now generating visuals…');
+    $('generateBtn').click();
+  }catch(e){status('Audio transcription failed: '+(e.message||'Please try another audio file or browser.'))}
+  finally{btn.disabled=false}
+}
+$('transcribeBtn').onclick=transcribeAudio;
+
 function exportStatus(t){$('exportStatus').textContent=t}
 function splitText(t){return t.replace(/\r/g,'').replace(/[ \t]+/g,' ').split(/(?<=[.!?।。！？])\s+|(?<=[.!?।。！？])(?=[^\s])/).map(x=>x.trim()).filter(x=>x.length>2).slice(0,40)}
 function queries(s){const t=s.toLowerCase(),q=[],rules=[[/పాలు|ఆవు|ఆవులు|పశువులు|డైరీ|పాడి|milk|cow|dairy/,'dairy cows milk farm'],[/రైతు|వ్యవసాయ|పంట|పొలం|farmer|farm|crop/,'Indian farmer agriculture field'],[/గొర్రె|గొర్రెలు|sheep|goat|మేక/,'sheep goat farm'],[/వ్యాపార|బిజినెస్|లాభ|ఆదాయ|business|profit|income/,'small business shop owner'],[/యంత్ర|మెషిన్|మిషన్|తయారీ|ఫ్యాక్టరీ|machine|factory/,'small manufacturing machine factory'],[/గ్రామ|పల్లె|village|rural/,'Indian village rural life'],[/మహిళ|కుట్టు|టైలరింగ్|tailoring|sewing/,'woman tailoring sewing machine'],[/ఇల్లు|నిర్మాణ|house|construction/,'rural house construction'],[/డబ్బు|బ్యాంక్|లోన్|loan|money|bank/,'small business finance banking'],[/విద్య|పాఠశాల|school|student|education/,'Indian school students classroom'],[/ఆసుపత్రి|వైద్య|డాక్టర్|hospital|doctor|health/,'doctor hospital healthcare']];for(const [re,v] of rules)if(re.test(t))q.push(v);const en=t.replace(/[^a-z0-9\s-]/g,' ').split(/\s+/).filter(x=>x.length>3&&!['this','that','with','from','will','your','they','have','their'].includes(x)).slice(0,6).join(' ');if(en)q.push(en);return [...new Set(q)].slice(0,4)}
@@ -75,9 +115,9 @@ if(index>0&&local<FADE_SECONDS){drawImage(scenes[index-1].img,1.07,.35*(1-local/
 const text=s.sentence||'';ctx.fillStyle='rgba(0,0,0,.62)';ctx.fillRect(0,H-132,W,132);ctx.fillStyle='#fff';ctx.textAlign='left';ctx.font='bold 29px system-ui';const words=text.split(/\s+/);let line='',lines=[],max=76;for(const word of words){if((line+' '+word).trim().length>max){lines.push(line);line=word}else line=(line+' '+word).trim()}if(line)lines.push(line);lines.slice(0,2).forEach((v,i)=>ctx.fillText(v,42,H-78+i*38))}
 function renderScenes(){$('scenes').innerHTML=scenes.length?scenes.map((s,i)=>'<div class="scene"><img src="'+s.img.src+'" alt=""><div><b>Scene '+(i+1)+'</b><p>'+s.sentence.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))+'</p><a href="'+s.source+'" target="_blank" rel="noopener">Photo source · '+s.license+'</a></div></div>').join(''):'<div class="muted">No visuals yet.</div>';$('previewBtn').disabled=!scenes.length;$('exportBtn').disabled=!scenes.length}
 function animate(){if(!playing)return;const elapsed=(performance.now()-startAt)/1000;drawAt(elapsed);if(elapsed>=scenes.length*SCENE_SECONDS){playing=false;drawAt(0);return}raf=requestAnimationFrame(animate)}
-$('generateBtn').onclick=async()=>{const raw=$('scriptInput').value.trim();if(!raw){status('First, type or paste your script.');return}playing=false;cancelAnimationFrame(raf);scenes=[];usedImages.clear();renderScenes();const sentences=splitText(raw);if(!sentences.length){status('Please enter a few complete sentences.');return}$('generateBtn').disabled=true;let missed=0;for(let i=0;i<sentences.length;i++){status('Finding matching visual '+(i+1)+' of '+sentences.length+'…');const scene=await findImage(sentences[i]);if(scene)scenes.push(scene);else missed++;renderScenes();drawAt(0)}$('generateBtn').disabled=false;if(scenes.length){status(scenes.length+' visuals ready. '+(missed?missed+' sentence(s) had no matching photo.':''));exportStatus('Preview is ready. Play it or export your video.');drawAt(0)}else{status('No matching photos could be loaded. Check internet and try shorter, clearer sentences.');exportStatus('No visuals found. Try again with simpler sentences.')}}
+$('generateBtn').onclick=async()=>{const raw=$('scriptInput').value.trim();if(!raw){status('Please type a script or upload audio and convert it first.');return}playing=false;cancelAnimationFrame(raf);scenes=[];usedImages.clear();renderScenes();const sentences=splitText(raw);if(!sentences.length){status('Please enter a few complete sentences.');return}$('generateBtn').disabled=true;let missed=0;for(let i=0;i<sentences.length;i++){status('Finding matching visual '+(i+1)+' of '+sentences.length+'…');const scene=await findImage(sentences[i]);if(scene)scenes.push(scene);else missed++;renderScenes();drawAt(0)}$('generateBtn').disabled=false;if(scenes.length){status(scenes.length+' visuals ready. '+(missed?missed+' sentence(s) had no matching photo.':''));exportStatus('Preview is ready. Play it or export your video.');drawAt(0)}else{status('No matching photos could be loaded. Check internet and try shorter, clearer sentences.');exportStatus('No visuals found. Try again with simpler sentences.')}}
 $('previewBtn').onclick=()=>{if(!scenes.length)return;playing=false;cancelAnimationFrame(raf);startAt=performance.now();playing=true;animate();exportStatus('Preview playing…')};
-$('clearBtn').onclick=()=>{playing=false;cancelAnimationFrame(raf);scenes=[];$('scriptInput').value='';$('download').hidden=true;renderScenes();drawAt(0);status('Ready. Paste a new script to begin.');exportStatus('Your visuals will appear here after generating.')};
+$('clearBtn').onclick=()=>{playing=false;cancelAnimationFrame(raf);scenes=[];$('scriptInput').value='';$('audioInput').value='';$('download').hidden=true;renderScenes();drawAt(0);status('Ready. Paste a new script to begin.');exportStatus('Your visuals will appear here after generating.')};
 $('exportBtn').onclick=()=>{if(!scenes.length)return;if(!window.MediaRecorder||!canvas.captureStream){exportStatus('Video export is not supported in this browser. Try updated Chrome.');return}try{playing=false;cancelAnimationFrame(raf);const stream=canvas.captureStream(30),mime=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));const rec=new MediaRecorder(stream,mime?{mimeType:mime}:{}),chunks=[];rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};rec.onstop=()=>{const url=URL.createObjectURL(new Blob(chunks,{type:rec.mimeType||'video/webm'}));$('download').href=url;$('download').download='reya-script-video.webm';$('download').hidden=false;exportStatus('Video export complete. Tap Download video.');stream.getTracks().forEach(t=>t.stop());drawAt(0)};rec.start();let frame=0;const render=()=>{if(frame>=scenes.length*SCENE_SECONDS){rec.stop();return}drawAt(frame);frame+=1/30;setTimeout(render,1000/30)};exportStatus('Exporting video… keep this page open.');render()}catch(e){exportStatus('Could not export: '+e.message)}};
 drawAt(0);
 </script></body></html>
