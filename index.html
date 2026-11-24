@@ -96,6 +96,23 @@ body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#0808
   background:linear-gradient(135deg,#e2c17c,#bd9147);
   color:#100d08;
 }
+
+/* REYA premium Why Choose Us section */
+.why-reya{padding:54px 0 28px;background:radial-gradient(ellipse at 50% 0%,#21180d 0%,#0b0a09 58%,#060606 100%);border-top:1px solid #70552c}
+.why-heading{text-align:center;margin:0 auto 28px;max-width:620px}
+.why-heading h2{font-family:Georgia,serif;font-size:clamp(27px,5vw,40px);letter-spacing:1.5px;color:#f2e5cb;margin:10px 0}
+.why-heading h2 em{font-style:normal;color:#d8b56e}
+.why-heading p{color:#b9ad9b;font-size:13px;line-height:1.7;margin:0}
+.why-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.why-card{min-width:0;padding:19px 14px 17px;border:1px solid #554126;border-radius:7px;background:linear-gradient(155deg,#1d1811,#0d0c0a);box-shadow:0 10px 26px #0005;text-align:center}
+.why-icon{width:39px;height:39px;margin:0 auto 12px;border:1px solid #98723c;border-radius:50%;display:grid;place-items:center;color:#e0bd77;font-family:Georgia,serif;font-size:21px}
+.why-card h3{font-family:Georgia,serif;color:#f0dfbd;font-size:14px;line-height:1.35;margin:0 0 8px}
+.why-card p{color:#aaa092;font-size:11px;line-height:1.65;margin:0}
+.why-footer{display:flex;align-items:center;justify-content:center;gap:12px;color:#d8b56e;font-size:9px;font-weight:800;letter-spacing:1.8px;margin:28px 0 16px}
+.why-footer i{width:32px;height:1px;background:#9b743b}
+.why-copy{text-align:center;color:#837866;font-size:10px;letter-spacing:1px}
+@media(max-width:850px){.why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.why-card:last-child{grid-column:1/-1}}
+@media(max-width:480px){.why-reya{padding:42px 0 24px}.why-heading{margin-bottom:22px}.why-grid{gap:9px}.why-card{padding:16px 10px}.why-card h3{font-size:13px}.why-card p{font-size:10px}}
 </style>
 </head>
 <body>
@@ -156,7 +173,20 @@ body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#0808
 </section>
 <section class="how" id="how"><div class="section-head"><div><div class="eyebrow">SIMPLE & EASY</div><h2>How to order.</h2></div></div><div class="steps"><div class="step"><b>01 — CHOOSE YOUR TEE</b><p>Select your preferred style, size, colour and quantity.</p></div><div class="step"><b>02 — ADD YOUR DESIGN</b><p>Type your text or upload your own photo, artwork or logo.</p></div><div class="step"><b>03 — CONFIRM ON WHATSAPP</b><p>Send your order details. We will contact you to confirm the design, delivery and payment.</p></div></div></section>
 </main>
-<footer class="footer"><div class="wrap footer-inner"><div><a class="brand-logo" href="#" aria-label="REYA"><img src="assets/reya-logo.webp" alt="REYA logo"></a><p>Wear your idea. Make it yours.</p></div><div><b style="font-size:12px">Questions or bulk orders?</b><p>Contact us through the WhatsApp order button.</p></div><div class="small">© <span id="year"></span> REYA CUSTOM TEES</div></div></footer>
+<section class="why-reya" id="why-reya">
+  <div class="wrap">
+    <div class="why-heading"><span class="eyebrow">THE REYA PROMISE</span><h2>WHY CHOOSE <em>REYA?</em></h2><p>Premium style. Personal touch. Delivered to your door.</p></div>
+    <div class="why-grid">
+      <article class="why-card"><span class="why-icon">₹</span><h3>Prices That Feel Right</h3><p>Custom style at pocket-friendly prices, with clear order details.</p></article>
+      <article class="why-card"><span class="why-icon">✦</span><h3>Design Your Way</h3><p>Your idea, your artwork, your choice. Make a tee that feels like you.</p></article>
+      <article class="why-card"><span class="why-icon">♛</span><h3>Premium Finish</h3><p>Carefully prepared prints and a polished look for your personal style.</p></article>
+      <article class="why-card"><span class="why-icon">⌂</span><h3>Home Delivery</h3><p>Get your order delivered to your doorstep, subject to service availability.</p></article>
+      <article class="why-card"><span class="why-icon">➜</span><h3>Quick Order Updates</h3><p>Connect with REYA on WhatsApp and get updates as your order is confirmed.</p></article>
+    </div>
+    <div class="why-footer">DESIGNED BY YOU <i></i> PRINTED BY REYA</div>
+    <div class="why-copy">© <span id="year"></span> REYA CUSTOM TEES</div>
+  </div>
+</section>
 <div class="toast" id="toast"></div>
 <script>
 const reyaLooks=[
