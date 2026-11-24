@@ -120,6 +120,28 @@ body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#0808
 .why-copy{text-align:center;color:#837866;font-size:10px;letter-spacing:1px}
 @media(max-width:850px){.why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.why-card:last-child{grid-column:1/-1}}
 @media(max-width:480px){.why-reya{padding:42px 0 24px}.why-heading{margin-bottom:22px}.why-grid{gap:9px}.why-card{padding:16px 10px}.why-card h3{font-size:13px}.why-card p{font-size:10px}}
+
+/* REYA product detail pages */
+.product{cursor:pointer}.product-detail{display:none;padding:24px 0 55px}.product-detail.active{display:block}
+.pd-back{background:transparent;border:1px solid #806238;color:#e4c78e;padding:10px 14px;border-radius:4px;font-size:11px;font-weight:800;margin-bottom:18px}
+.pd-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:28px}
+.pd-image{background:linear-gradient(145deg,#211b12,#0d0c0a);border:1px solid #574328;min-height:430px;display:grid;place-items:center;overflow:hidden}
+.pd-image img{width:100%;height:430px;object-fit:contain;transition:transform .25s;cursor:zoom-in}
+.pd-image.zoom img{transform:scale(1.45);cursor:zoom-out}
+.pd-info{padding:8px 0}.pd-kicker{color:#c9a35b;font-size:10px;letter-spacing:2px;font-weight:900}
+.pd-info h2{font:700 clamp(27px,4vw,38px) Georgia,serif;color:#f3e7d0;margin:10px 0}
+.pd-rating{color:#d8b56e;font-size:12px;margin:8px 0}.pd-price{font-size:27px;font-weight:900;color:#e4c17a;margin:16px 0 4px}.pd-tax{font-size:10px;color:#a99d8a}
+.pd-label{display:block;color:#d9c8a7;font-size:10px;font-weight:900;letter-spacing:1px;margin:22px 0 9px}
+.pd-options{display:flex;gap:8px;flex-wrap:wrap}.pd-option{background:#15120e;border:1px solid #695333;color:#eadcc1;padding:10px 14px;border-radius:3px;font-size:11px}.pd-option.selected{background:#c9a35b;color:#100d08;border-color:#e1c17d;font-weight:900}
+.pd-color{width:29px;height:29px;border-radius:50%;border:2px solid #87704b;cursor:pointer}.pd-color.selected{outline:2px solid #e3c27e;outline-offset:3px}
+.pd-qty{display:flex;align-items:center;gap:13px}.pd-qty button{width:32px;height:32px;background:#211a10;border:1px solid #806238;color:#f2dfb9}.pd-qty span{min-width:18px;text-align:center}
+.pd-delivery{display:flex;gap:8px;margin-top:9px}.pd-delivery input{min-width:0;flex:1;background:#100f0d;border:1px solid #594a34;color:#f3eee3;padding:12px}
+.pd-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.pd-actions button{flex:1;min-width:130px}
+.pd-description{margin-top:25px;border-top:1px solid #4b3a22;padding-top:18px;color:#b9ad9b;font-size:12px;line-height:1.8}
+.pd-sizechart{width:100%;border-collapse:collapse;margin-top:12px;font-size:11px;color:#dfd1b8}.pd-sizechart th,.pd-sizechart td{padding:9px;border:1px solid #594a34;text-align:center}.pd-sizechart th{color:#e2bd75}
+.pd-note{font-size:10px;color:#9f927e;margin-top:10px;line-height:1.6}
+@media(max-width:760px){.pd-layout{grid-template-columns:1fr;gap:18px}.pd-image,.pd-image img{min-height:320px;height:320px}.pd-info{padding:0 2px}.product-detail{padding-top:18px}}
+
 </style>
 </head>
 <body>
@@ -159,6 +181,7 @@ body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#0808
 <article class="product" data-gender="Female" data-kind="Oversized"><div class="product-photo"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=650&q=80" alt="Streetwear oversized tee"></div><div class="product-info"><h3>Streetwear Oversized</h3><p>Street style · Relaxed fit</p><span class="price">₹349</span><button data-name="Streetwear Oversized" data-price="349">CUSTOMIZE</button></div></article>
 </div>
 </section>
+<section class="product-detail" id="productDetail" aria-live="polite"></section>
 <section class="custom" id="customize" hidden>
 <div><div class="eyebrow" style="color:#d7ff54">BUILD YOUR OWN</div><h2>Make it yours.</h2><p>Select your T-shirt, size and colour. Add your own text or upload a photo/logo. Preview the basic design and send your order details to REYA on WhatsApp.</p>
 <div class="formgrid">
@@ -238,7 +261,44 @@ let activeGender="";
 document.querySelectorAll(".gender-btn").forEach(btn=>btn.addEventListener("click",()=>{activeGender=btn.dataset.gender;document.querySelectorAll(".gender-btn").forEach(b=>b.classList.toggle("selected",b===btn));$("styleFilters").hidden=false;document.querySelectorAll(".product").forEach(p=>p.style.display=p.dataset.gender===activeGender?"block":"none");$("shop").querySelector(".section-head h2").textContent=activeGender==="Male"?"Men's collection":"Women's collection";$("shop").querySelector(".section-head p").textContent="Choose your fit and customize your tee."}));
 document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.querySelectorAll(".product").forEach(p=>p.style.display=p.dataset.gender===activeGender&&(btn.dataset.filter==="All"||p.dataset.kind===btn.dataset.filter)?"block":"none")}));
 
-document.querySelectorAll(".product-info button").forEach(btn=>btn.addEventListener("click",()=>{$("style").value=btn.dataset.name;updatePreview();showSection("customize")}));
+
+let pdProduct=null,pdQty=1,pdSize="M",pdColour="Black";
+function openProductDetail(card){
+ const img=card.querySelector(".product-photo img"),name=card.querySelector("h3").textContent,price=Number(card.querySelector("button").dataset.price)||349,desc=card.querySelector(".product-info p").textContent;
+ pdProduct={name,price,desc,image:img?img.src:""};
+ $("shop").hidden=true;$("customize").hidden=true;
+ const d=$("productDetail");d.classList.add("active");d.style.display="block";pdQty=1;pdSize="M";pdColour="Black";
+ d.innerHTML=`
+ <button class="pd-back" id="pdBack">← BACK TO COLLECTION</button>
+ <div class="pd-layout">
+  <div><div class="pd-image" id="pdImage"><img src="${pdProduct.image}" alt="${name}"></div><div class="pd-note">Tap the product image to zoom. Product photos are illustrative; actual print and colour may vary slightly.</div></div>
+  <div class="pd-info">
+   <div class="pd-kicker">REYA CUSTOM TEES · PRODUCT DETAILS</div><h2>${name}</h2>
+   <div class="pd-rating">★ ★ ★ ★ ★ <span style="color:#a99d8a">New collection · Reviews coming soon</span></div>
+   <div class="pd-price">₹${price.toLocaleString("en-IN")}</div><div class="pd-tax">Inclusive of product price · Delivery charges confirmed at checkout</div>
+   <span class="pd-label">SELECT SIZE</span><div class="pd-options" id="pdSizes">${["S","M","L","XL","XXL"].map(s=>'<button class="pd-option '+(s==="M"?"selected":"")+'" data-size="'+s+'">'+s+'</button>').join("")}</div>
+   <span class="pd-label">SELECT COLOUR</span><div class="pd-options" id="pdColours">
+    ${[["Black","#171717"],["White","#f1eee6"],["Beige","#b9a58d"],["Olive","#52634f"],["Light Blue","#9eb8ce"]].map((x,i)=>'<button class="pd-option '+(i===0?"selected":"")+'" data-colour="'+x[0]+'"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:'+x[1]+';border:1px solid #aaa;vertical-align:middle;margin-right:6px"></span>'+x[0]+'</button>').join("")}
+   </div>
+   <span class="pd-label">QUANTITY</span><div class="pd-qty"><button id="pdMinus">−</button><span id="pdQty">1</span><button id="pdPlus">+</button></div>
+   <span class="pd-label">DELIVERY CHECK</span><div class="pd-delivery"><input id="pdPin" inputmode="numeric" maxlength="6" placeholder="Enter 6-digit PIN code"><button class="pd-option" id="pdCheck">CHECK</button></div><div class="pd-note" id="pdDeliveryNote">Enter your PIN code to share it with REYA for delivery confirmation.</div>
+   <div class="pd-actions"><button class="btn" id="pdAdd">ADD TO CART</button><button class="btn light" id="pdBuy">BUY NOW</button></div>
+   <div class="pd-description"><b style="color:#e5c88f">PRODUCT DETAILS</b><br>${desc}<br>Customisable T-shirt · Choose your preferred size and colour before ordering.<br><br><b style="color:#e5c88f">SIZE GUIDE (approx.)</b><table class="pd-sizechart"><tr><th>Size</th><th>Chest</th><th>Length</th></tr><tr><td>S</td><td>36"</td><td>26"</td></tr><tr><td>M</td><td>38"</td><td>27"</td></tr><tr><td>L</td><td>40"</td><td>28"</td></tr><tr><td>XL</td><td>42"</td><td>29"</td></tr><tr><td>XXL</td><td>44"</td><td>30"</td></tr></table><div class="pd-note">Measurements are indicative. Confirm exact garment measurements with REYA before placing your order.</div></div>
+  </div>
+ </div>`;
+ $("pdBack").onclick=()=>{d.classList.remove("active");d.style.display="none";$("shop").hidden=false;$("shop").scrollIntoView({behavior:"smooth"})};
+ $("pdImage").onclick=()=> $("pdImage").classList.toggle("zoom");
+ $("pdSizes").querySelectorAll("button").forEach(b=>b.onclick=()=>{pdSize=b.dataset.size;$("pdSizes").querySelectorAll("button").forEach(x=>x.classList.toggle("selected",x===b))});
+ $("pdColours").querySelectorAll("button").forEach(b=>b.onclick=()=>{pdColour=b.dataset.colour;$("pdColours").querySelectorAll("button").forEach(x=>x.classList.toggle("selected",x===b))});
+ $("pdMinus").onclick=()=>{pdQty=Math.max(1,pdQty-1);$("pdQty").textContent=pdQty};
+ $("pdPlus").onclick=()=>{pdQty=Math.min(10,pdQty+1);$("pdQty").textContent=pdQty};
+ $("pdCheck").onclick=()=>{const pin=$("pdPin").value.trim();$("pdDeliveryNote").textContent=/^\\d{6}$/.test(pin)?"PIN saved for delivery confirmation. REYA will confirm serviceability.":"Please enter a valid 6-digit PIN code.";};
+ $("pdAdd").onclick=()=>{toast(name+" added to your selection. Choose BUY NOW to continue.");};
+ $("pdBuy").onclick=()=>{$("style").value=name;$("size").value=pdSize;$("colour").value=[...$("colour").options].find(o=>o.dataset.label===pdColour)?.value||$("colour").value;$("quantity").value=pdQty;updatePreview();d.classList.remove("active");d.style.display="none";showSection("customize")};
+ d.scrollIntoView({behavior:"smooth"});
+}
+document.querySelectorAll(".product").forEach(card=>card.addEventListener("click",e=>{if(e.target.closest("button"))e.preventDefault();openProductDetail(card)}));
+
 $("orderBtn").addEventListener("click",()=>{const name=$("customer").value.trim(),phone=$("phone").value.trim(),qty=Math.max(1,Math.min(100,Number($("quantity").value)||1)),style=$("style").value,size=$("size").value,colour=$("colour").selectedOptions[0].dataset.label||$("colour").selectedOptions[0].text,price=prices[style]*qty;if(!name||!phone){toast("Please enter your name and mobile number.");return}const msg=["Hi REYA! I want to place a custom T-shirt order.","Name: "+name,"Mobile: "+phone,"Style: "+style,"Size: "+size,"Colour: "+colour,"Quantity: "+qty,"Text: "+($("customText").value.trim()||"None"),"Artwork uploaded: "+(uploadedImage?"Yes (I will share the image in WhatsApp)":"No"),"Estimated total: ₹"+price.toLocaleString("en-IN"),"Delivery address: "+($("address").value.trim()||"Will share later"),"Please confirm availability, final design, shipping and payment details."].join("\n");const url="https://wa.me/919177058292?text="+encodeURIComponent(msg);window.open(url,"_blank","noopener,noreferrer")});
 $("year").textContent=new Date().getFullYear();updatePreview();
 </script>
