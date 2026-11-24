@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101010"><meta name="description" content="Create your own style with REYA Custom Tees. Choose a tee, upload your design and order on WhatsApp.">
+<title>REYA CUSTOM TEES</title>
+<style>
+:root{--bg:#f6f5f1;--ink:#171717;--muted:#77766f;--line:#e4e1d9;--accent:#d7ff54;--card:#fff;--dark:#111}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}button,input,select{font:inherit}button{cursor:pointer}.wrap{max-width:1180px;margin:auto;padding:0 22px}.topbar{background:#111;color:#eee;text-align:center;padding:9px;font-size:11px;letter-spacing:1.4px}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.logo{font-weight:1000;font-size:23px;letter-spacing:2px}.brand-logo{display:inline-flex;align-items:center;text-decoration:none}.brand-logo img{display:block;width:150px;height:68px;object-fit:contain}.footer .brand-logo img{width:175px;height:76px}.logo span{background:var(--accent);padding:5px 7px;margin-right:6px;color:#111}.navlinks{display:flex;gap:25px;align-items:center}.navlinks a{color:inherit;text-decoration:none;font-size:13px;font-weight:650}.pill{border:0;background:var(--ink);color:#fff;padding:12px 17px;border-radius:4px;font-size:12px;font-weight:800}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:28px;align-items:center;padding:50px 0 45px}.eyebrow{font-size:10px;letter-spacing:2.4px;font-weight:900;color:#68685d}.hero h1{font-size:clamp(44px,7vw,82px);line-height:.94;letter-spacing:-5px;margin:16px 0}.hero h1 em{font-style:normal;background:var(--accent);padding:0 8px}.hero p{max-width:440px;color:var(--muted);line-height:1.7;font-size:14px}.hero-actions{display:flex;gap:10px;margin-top:25px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--ink);padding:14px 20px;background:var(--ink);color:#fff;font-size:12px;font-weight:850;border-radius:3px}.btn.light{background:transparent;color:var(--ink)}.hero-art{min-height:390px;background:#d9d7ce;position:relative;overflow:hidden;display:grid;place-items:center}.hero-art img{width:100%;height:390px;object-fit:cover;mix-blend-mode:multiply}.hero-stamp{position:absolute;bottom:18px;left:18px;background:var(--accent);padding:12px 15px;font-size:11px;font-weight:950;letter-spacing:1px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:30px 0 18px}.section-head h2{font-size:30px;letter-spacing:-1px;margin:5px 0}.section-head p{margin:0;color:var(--muted);font-size:12px}.filters{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.filter{background:transparent;border:1px solid #d5d2ca;padding:9px 14px;font-size:11px;border-radius:30px}.filter.active{background:#111;color:#fff;border-color:#111}.products{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.product{background:var(--card);border:1px solid var(--line);padding:10px}.product-photo{height:245px;background:#e9e7e0;position:relative;overflow:hidden}.product-photo img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.product:hover .product-photo img{transform:scale(1.04)}.tag{position:absolute;top:10px;left:10px;background:var(--accent);font-size:9px;font-weight:900;padding:6px 8px}.product-info{padding:12px 3px 4px}.product-info h3{font-size:13px;margin:0 0 7px}.product-info p{font-size:11px;color:var(--muted);margin:0 0 10px}.price{font-size:14px;font-weight:900}.product-info button{float:right;background:#111;color:white;border:0;padding:8px 11px;font-size:10px;font-weight:800}.custom{margin:75px 0;background:#171717;color:#fff;padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:30px}.custom h2{font-size:36px;letter-spacing:-1.5px;margin:8px 0 12px}.custom p{color:#b8b8b1;font-size:13px;line-height:1.7}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:10px;color:#d3d3cc;font-weight:800;letter-spacing:.7px}.field input,.field select{width:100%;background:#252525;border:1px solid #414141;color:#fff;padding:12px;border-radius:3px;min-height:43px}.field input[type=file]{padding:9px}.field input[type=color]{padding:4px;height:43px}.upload-note{font-size:10px;color:#aaa}.mockup{background:#e8e6de;min-height:360px;display:grid;place-items:center;position:relative;overflow:hidden}.tee{width:245px;height:270px;background:#f7f7f4;clip-path:polygon(25% 0,39% 0,50% 9%,61% 0,75% 0,100% 24%,83% 43%,74% 34%,74% 100%,26% 100%,26% 34%,17% 43%,0 24%);filter:drop-shadow(0 12px 12px #0002);position:relative;display:grid;place-items:center}.tee-design{position:absolute;top:39%;left:50%;transform:translate(-50%,-50%);max-width:95px;max-height:90px;object-fit:contain}.tee-text{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);font-weight:900;text-align:center;font-size:17px;max-width:110px;overflow-wrap:anywhere}.mock-label{position:absolute;bottom:12px;left:12px;background:#111;color:#fff;padding:8px 10px;font-size:9px;letter-spacing:1px}.orderbar{margin-top:15px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.total{font-size:13px}.total strong{font-size:22px}.how{padding:20px 0 65px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.step{border-top:2px solid #111;padding:16px 0}.step b{font-size:12px}.step p{font-size:12px;color:var(--muted);line-height:1.6}.footer{background:#111;color:#fff;padding:35px 0}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer p{color:#aaa;font-size:11px}.small{font-size:10px;color:#888}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 18px;font-size:12px;z-index:10;display:none;max-width:90%;text-align:center}
+.site-header{width:100%;height:76px;margin:0;padding:0;background:linear-gradient(110deg,#080808 0%,#17130d 48%,#080808 100%);border-bottom:1px solid #8e6b2d;display:flex;align-items:center;justify-content:center;overflow:hidden}.reya-brand{height:76px;display:flex;align-items:center;justify-content:center;gap:12px;color:#d9ad52;text-decoration:none;padding:0 14px}.reya-mark{width:43px;height:43px;display:grid;place-items:center;color:#d8ad55;filter:drop-shadow(0 0 5px #b8863533);flex:0 0 auto}.reya-mark svg{width:100%;height:100%}.reya-wording{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px}.reya-wording strong{font-family:Georgia,Times New Roman,serif;font-size:34px;line-height:.95;letter-spacing:5px;font-weight:700;color:#f4e4bd;text-shadow:0 1px 0 #8e6b2d,0 0 12px #c89a4533}.reya-wording small{font-family:Arial,sans-serif;font-size:8px;line-height:1.2;letter-spacing:1.25px;font-weight:700;color:#d8ad55;white-space:nowrap}@media(max-width:480px){.site-header,.reya-brand{height:76px}.reya-brand{gap:9px}.reya-mark{width:38px;height:38px}.reya-wording strong{font-size:31px;letter-spacing:4px}.reya-wording small{font-size:7px;letter-spacing:1px}}
+@media(max-width:850px){.mobile-offer{display:flex}.products{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.hero-art,.hero-art img{height:300px;min-height:300px}.custom{grid-template-columns:1fr;margin:45px 0;padding:22px}.navlinks{gap:12px}.navlinks a:not(.pill){display:none}}
+@media(max-width:480px){.header-banner,.header-banner img{height:76px}.wrap{padding:0 14px}.hero{padding:35px 0}.hero h1{letter-spacing:-3px}.products{gap:9px}.product-photo{height:185px}.section-head h2{font-size:25px}.steps{grid-template-columns:1fr}.custom h2{font-size:30px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+
+/* REYA premium dark theme */
+:root{--bg:#090909;--ink:#f3eee3;--muted:#aaa398;--line:#30291f;--accent:#c9a35b;--card:#151311;--dark:#080808}
+body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#080808 100%);color:var(--ink)}
+.topbar{background:#080808;color:#d7bd8b;border-bottom:1px solid #302719}
+.nav{border-bottom-color:#3a3022}
+.logo span{background:#c9a35b;color:#090909}
+.navlinks a{color:#eee5d5}
+.pill,.btn{background:linear-gradient(135deg,#d8b56e,#a77b35);color:#100d08;border:1px solid #e1c17d}
+.btn.light{background:transparent;color:#e5d4b2;border-color:#a8874c}
+.eyebrow{color:#c5a66d}
+.hero h1{color:#f5efe4}
+.hero h1 em{background:linear-gradient(110deg,#e1c17d,#a77b35);color:#100d08}
+.hero p,.section-head p,.product-info p,.step p{color:#aaa398}
+.hero-art{background:#17130e;border:1px solid #3b3020}
+.hero-art img{mix-blend-mode:normal;opacity:.82}
+.hero-stamp,.tag{background:#c9a35b;color:#100d08}
+.section-head h2{color:#f3eee3}
+.filter{color:#d8cbb4;border-color:#54442b;background:#15120e}
+.filter.active{background:#c9a35b;color:#100d08;border-color:#c9a35b}
+.product{background:linear-gradient(155deg,#1a1712,#100f0d);border:1px solid #403321;box-shadow:0 8px 24px #0005}
+.product-photo{background:#242019}
+.product-info h3{color:#f4ecdf}
+.price{color:#e2bd75}
+.product-info button{background:#c9a35b;color:#100d08}
+.custom{background:linear-gradient(125deg,#17130e,#0b0b0a);border:1px solid #594326;box-shadow:0 16px 40px #0006}
+.custom .eyebrow{color:#dfbd79!important}
+.custom h2{color:#f5ead6}
+.custom p{color:#b9ad9b}
+.field label{color:#d9c8a7}
+.field input,.field select{background:#100f0d;border-color:#594a34;color:#f3eee3}
+.field input::placeholder{color:#827969}
+.upload-note,.small{color:#a99d8a}
+.mockup{background:radial-gradient(circle,#393127,#17130e);border:1px solid #594326}
+.mock-label{background:#c9a35b;color:#100d08}
+.step{border-top-color:#b58b4b}
+.step b{color:#e5c88f}
+.footer{background:#050505;border-top:1px solid #594326}
+.footer p{color:#aaa398}
+.toast{background:#c9a35b;color:#100d08}
+.site-header{background:linear-gradient(110deg,#080808 0%,#17130d 48%,#080808 100%)}
+@media(max-width:480px){.product{padding:8px}.hero h1{color:#f5efe4}}
+
+
+/* Landing page actions and gender-first shopping */
+.hero-action-panel{display:inline-flex;gap:12px;flex-wrap:wrap;padding:12px;border:1px solid #8e6b2d;border-radius:8px;background:linear-gradient(120deg,#17120b,#090909);box-shadow:0 10px 30px #0006;margin-top:18px}
+.hero-actions{margin-top:0}
+.shop-section[hidden],.custom[hidden],#styleFilters[hidden]{display:none!important}
+.gender-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0}
+.gender-btn{min-height:105px;border:1px solid #8e6b2d;border-radius:6px;background:linear-gradient(135deg,#21190e,#0b0b0b);color:#f1dfb9;font-family:Georgia,serif;font-size:24px;letter-spacing:2px;font-weight:700}
+.gender-btn:active,.gender-btn.selected{background:linear-gradient(135deg,#d8b56e,#a77b35);color:#100d08}
+.shop-section .section-head{margin-top:34px}
+@media(max-width:480px){.hero-action-panel{display:flex;width:100%;padding:10px;gap:9px}.hero-action-panel .btn{flex:1;padding:14px 10px;font-size:11px}.gender-btn{min-height:88px;font-size:21px}}
+
+/* REYA EXCLUSIVE ten-piece showcase */
+.hero-art.reya-showcase{display:block;min-width:0;width:100%;min-height:0;padding:22px 0 16px;background:linear-gradient(145deg,#17130e,#090909 72%);border:1px solid #70552c;border-radius:10px;overflow:hidden;box-shadow:0 18px 44px #0008}
+.showcase-heading{text-align:center;padding:0 16px 18px}
+.showcase-heading h2{font-family:Georgia,serif;font-size:clamp(25px,4vw,38px);letter-spacing:2px;color:#f2e5cb;margin:6px 0}
+.showcase-heading h2 em{font-style:normal;color:#d8b56e}
+.showcase-heading p{font-size:13px;color:#b9ad9b;margin:0;letter-spacing:.5px}
+.reya-carousel{width:100%;overflow:hidden;position:relative;mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.reya-track{display:flex;gap:12px;width:max-content;padding:4px 12px 12px;animation:reyaDrift 48s linear infinite}
+.reya-carousel:hover .reya-track{animation-play-state:paused}
+.reya-shirt-card{width:clamp(118px,15vw,158px);flex:0 0 auto;background:linear-gradient(160deg,#211c15,#100f0d);border:1px solid #493a25;border-radius:7px;padding:9px 9px 11px;text-align:center}
+.reya-shirt-visual{height:145px;display:grid;place-items:center;background:radial-gradient(ellipse,#393024 0%,#17130e 70%);border-radius:4px;overflow:hidden}
+.reya-shirt-visual svg{height:132px;width:100%;max-width:130px;filter:drop-shadow(0 8px 8px #0008)}
+.reya-shirt-card strong{display:block;color:#ead8b6;font-size:10px;letter-spacing:.8px;margin-top:9px;white-space:nowrap}
+.reya-shirt-card small{display:block;color:#c7a15b;font-size:9px;letter-spacing:1px;margin-top:4px}
+.showcase-footer{display:flex;align-items:center;justify-content:center;gap:12px;color:#d8b56e;font-size:9px;font-weight:700;letter-spacing:1.6px;padding:10px 8px 0}
+.showcase-footer i{height:1px;width:28px;background:#9b743b}
+@keyframes reyaDrift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.reya-track{animation:none}}
+@media(max-width:600px){.hero-art.reya-showcase{padding:17px 0 13px}.showcase-heading{padding-bottom:13px}.reya-shirt-card{width:126px}.reya-shirt-visual{height:132px}.reya-shirt-visual svg{height:120px}.reya-track{gap:9px;animation-duration:42s}}
+
+/* Keep both hero actions visually consistent in REYA gold */
+.hero-action-panel .btn,
+.hero-action-panel .btn.light{
+  background:linear-gradient(135deg,#d8b56e,#a77b35);
+  color:#100d08;
+  border:1px solid #e1c17d;
+  box-shadow:inset 0 1px 0 #f3d99a55,0 4px 12px #0004;
+}
+.hero-action-panel .btn:hover,
+.hero-action-panel .btn.light:hover{
+  background:linear-gradient(135deg,#e2c17c,#bd9147);
+  color:#100d08;
+}
+
+
+.reya-help{display:flex;justify-content:center;align-items:center;gap:10px 18px;flex-wrap:wrap;margin:16px auto 12px;font-size:10px;letter-spacing:.35px;color:#a99d8a}
+.reya-help span{font-size:9px;font-weight:800;letter-spacing:1.4px;color:#d8b56e}
+.reya-help a{color:#d6c4a2;text-decoration:none}
+.reya-help a:hover{color:#f2d18c;text-decoration:underline}
+@media(max-width:480px){.reya-help{gap:7px 12px;font-size:9px}}
+
+/* REYA premium Why Choose Us section */
+.why-reya{padding:54px 0 28px;background:radial-gradient(ellipse at 50% 0%,#21180d 0%,#0b0a09 58%,#060606 100%);border-top:1px solid #70552c}
+.why-heading{text-align:center;margin:0 auto 28px;max-width:620px}
+.why-heading h2{font-family:Georgia,serif;font-size:clamp(27px,5vw,40px);letter-spacing:1.5px;color:#f2e5cb;margin:10px 0}
+.why-heading h2 em{font-style:normal;color:#d8b56e}
+.why-heading p{color:#b9ad9b;font-size:13px;line-height:1.7;margin:0}
+.why-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.why-card{min-width:0;padding:19px 14px 17px;border:1px solid #554126;border-radius:7px;background:linear-gradient(155deg,#1d1811,#0d0c0a);box-shadow:0 10px 26px #0005;text-align:center}
+.why-icon{width:39px;height:39px;margin:0 auto 12px;border:1px solid #98723c;border-radius:50%;display:grid;place-items:center;color:#e0bd77;font-family:Georgia,serif;font-size:21px}
+.why-card h3{font-family:Georgia,serif;color:#f0dfbd;font-size:14px;line-height:1.35;margin:0 0 8px}
+.why-card p{color:#aaa092;font-size:11px;line-height:1.65;margin:0}
+.why-footer{display:flex;align-items:center;justify-content:center;gap:12px;color:#d8b56e;font-size:9px;font-weight:800;letter-spacing:1.8px;margin:28px 0 16px}
+.why-footer i{width:32px;height:1px;background:#9b743b}
+.why-copy{text-align:center;color:#837866;font-size:10px;letter-spacing:1px}
+@media(max-width:850px){.why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.why-card:last-child{grid-column:1/-1}}
+@media(max-width:480px){.why-reya{padding:42px 0 24px}.why-heading{margin-bottom:22px}.why-grid{gap:9px}.why-card{padding:16px 10px}.why-card h3{font-size:13px}.why-card p{font-size:10px}}
+
+/* REYA product detail pages */
+.product{cursor:pointer}.product-detail{display:none;padding:24px 0 55px}.product-detail.active{display:block}
+.pd-back{background:transparent;border:1px solid #806238;color:#e4c78e;padding:10px 14px;border-radius:4px;font-size:11px;font-weight:800;margin-bottom:18px}
+.pd-layout{display:grid;grid-template-columns:1.05fr .95fr;gap:28px}
+.pd-image{background:linear-gradient(145deg,#211b12,#0d0c0a);border:1px solid #574328;min-height:430px;display:grid;place-items:center;overflow:hidden}
+.pd-image img{width:100%;height:430px;object-fit:contain;transition:transform .25s;cursor:zoom-in}
+.pd-image.zoom img{transform:scale(1.45);cursor:zoom-out}
+.pd-info{padding:8px 0}.pd-kicker{color:#c9a35b;font-size:10px;letter-spacing:2px;font-weight:900}
+.pd-info h2{font:700 clamp(27px,4vw,38px) Georgia,serif;color:#f3e7d0;margin:10px 0}
+.pd-rating{color:#d8b56e;font-size:12px;margin:8px 0}.pd-price{font-size:27px;font-weight:900;color:#e4c17a;margin:16px 0 4px}.pd-tax{font-size:10px;color:#a99d8a}
+.pd-label{display:block;color:#d9c8a7;font-size:10px;font-weight:900;letter-spacing:1px;margin:22px 0 9px}
+.pd-options{display:flex;gap:8px;flex-wrap:wrap}.pd-option{background:#15120e;border:1px solid #695333;color:#eadcc1;padding:10px 14px;border-radius:3px;font-size:11px}.pd-option.selected{background:#c9a35b;color:#100d08;border-color:#e1c17d;font-weight:900}
+.pd-color{width:29px;height:29px;border-radius:50%;border:2px solid #87704b;cursor:pointer}.pd-color.selected{outline:2px solid #e3c27e;outline-offset:3px}
+.pd-qty{display:flex;align-items:center;gap:13px}.pd-qty button{width:32px;height:32px;background:#211a10;border:1px solid #806238;color:#f2dfb9}.pd-qty span{min-width:18px;text-align:center}
+.pd-delivery{display:flex;gap:8px;margin-top:9px}.pd-delivery input{min-width:0;flex:1;background:#100f0d;border:1px solid #594a34;color:#f3eee3;padding:12px}
+.pd-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.pd-actions button{flex:1;min-width:130px}
+.pd-description{margin-top:25px;border-top:1px solid #4b3a22;padding-top:18px;color:#b9ad9b;font-size:12px;line-height:1.8}
+.pd-sizechart{width:100%;border-collapse:collapse;margin-top:12px;font-size:11px;color:#dfd1b8}.pd-sizechart th,.pd-sizechart td{padding:9px;border:1px solid #594a34;text-align:center}.pd-sizechart th{color:#e2bd75}
+.pd-note{font-size:10px;color:#9f927e;margin-top:10px;line-height:1.6}
+@media(max-width:760px){.pd-layout{grid-template-columns:1fr;gap:18px}.pd-image,.pd-image img{min-height:320px;height:320px}.pd-info{padding:0 2px}.product-detail{padding-top:18px}}
+
+</style>
+<style>
+.shop-page{padding:28px 0 65px}.shop-page .section-head{margin-top:10px}
+.custom-page{padding:35px 0 65px}.custom-page .custom{display:grid;margin:0}
+.page-back{display:inline-block;margin:0 0 18px;color:#dfbd79;text-decoration:none;font-size:11px;font-weight:800}
+@media(max-width:760px){.shop-page,.custom-page{padding-top:20px}}
+</style></head><body><header class="site-header">
+  <a class="reya-brand" href="#" aria-label="REYA Custom Tees home">
+    <span class="reya-mark" aria-hidden="true">
+      <svg viewBox="0 0 48 48" role="img">
+        <path d="M8 17l8 6 8-13 8 13 8-6-4 20H12L8 17Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M13 31h22M17 37h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        <circle cx="8" cy="15" r="2" fill="currentColor"/><circle cx="24" cy="8" r="2" fill="currentColor"/><circle cx="40" cy="15" r="2" fill="currentColor"/>
+      </svg>
+    </span>
+    <span class="reya-wording">
+      <strong>REYA</strong>
+      <small>DESIGNED BY YOU · PRINTED BY REYA</small>
+    </span>
+  </a>
+</header><main class="wrap shop-page"><a class="page-back" href="index.html">← BACK TO HOME</a><section id="shop" class="shop-section" hidden>
+<div class="section-head"><div><div class="eyebrow">THE REYA DROP</div><h2>Find your fit.</h2><p>Choose a base tee to start customizing.</p></div><div class="small">COLLECTION / 01</div></div>
+<div class="gender-picker" id="genderPicker"><button class="gender-btn" data-gender="Male">MEN</button><button class="gender-btn" data-gender="Female">WOMEN</button></div><div class="filters" id="styleFilters" hidden><button class="filter active" data-filter="All">All styles</button><button class="filter" data-filter="Oversized">Oversized</button><button class="filter" data-filter="Regular">Regular fit</button><button class="filter" data-filter="Premium">Premium</button></div>
+<div class="products" id="products">
+<article class="product" data-gender="Male" data-kind="Oversized"><div class="product-photo"><span class="tag">BESTSELLER</span><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=650&q=80" alt="Classic oversized tee"></div><div class="product-info"><h3>Classic Oversized Tee</h3><p>Relaxed fit · Everyday comfort</p><span class="price">₹349</span><button data-name="Classic Oversized Tee" data-price="349">CUSTOMIZE</button></div></article>
+<article class="product" data-gender="Male" data-kind="Regular"><div class="product-photo"><img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=650&q=80" alt="Essential regular tee"></div><div class="product-info"><h3>Essential Regular Tee</h3><p>Classic fit · Clean look</p><span class="price">₹349</span><button data-name="Essential Regular Tee" data-price="349">CUSTOMIZE</button></div></article>
+<article class="product" data-gender="Female" data-kind="Premium"><div class="product-photo"><span class="tag">PREMIUM</span><img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=650&q=80" alt="Premium graphic tee"></div><div class="product-info"><h3>Premium Print Tee</h3><p>Premium feel · Your artwork</p><span class="price">₹349</span><button data-name="Premium Print Tee" data-price="349">CUSTOMIZE</button></div></article>
+<article class="product" data-gender="Female" data-kind="Oversized"><div class="product-photo"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=650&q=80" alt="Streetwear oversized tee"></div><div class="product-info"><h3>Streetwear Oversized</h3><p>Street style · Relaxed fit</p><span class="price">₹349</span><button data-name="Streetwear Oversized" data-price="349">CUSTOMIZE</button></div></article>
+</div>
+</section></main><section class="why-reya" id="why-reya">
+  <div class="wrap">
+    <div class="why-heading"><span class="eyebrow">THE REYA PROMISE</span><h2>WHY CHOOSE <em>REYA?</em></h2><p>Premium style. Personal touch. Delivered to your door.</p></div>
+    <div class="why-grid">
+      <article class="why-card"><span class="why-icon">₹</span><h3>Prices That Feel Right</h3><p>Custom style at pocket-friendly prices, with clear order details.</p></article>
+      <article class="why-card"><span class="why-icon">✦</span><h3>Design Your Way</h3><p>Your idea, your artwork, your choice. Make a tee that feels like you.</p></article>
+      <article class="why-card"><span class="why-icon">♛</span><h3>Premium Finish</h3><p>Carefully prepared prints and a polished look for your personal style.</p></article>
+      <article class="why-card"><span class="why-icon">⌂</span><h3>Home Delivery</h3><p>Get your order delivered to your doorstep, subject to service availability.</p></article>
+      <article class="why-card"><span class="why-icon">➜</span><h3>Quick Order Updates</h3><p>Connect with REYA on WhatsApp and get updates as your order is confirmed.</p></article>
+    </div>
+    <div class="why-footer">DESIGNED BY YOU <i></i> PRINTED BY REYA</div>
+    <div class="reya-help"><span>NEED HELP?</span><a href="tel:9177058292">9177058292</a><a href="mailto:hr9676254401@gmail.com">hr9676254401@gmail.com</a></div>
+    <div class="why-copy">© <span id="year"></span> REYA CUSTOM TEES</div>
+  </div>
+</section><script>
+const cards=[...document.querySelectorAll(".product")];let gender="";
+document.querySelectorAll(".gender-btn").forEach(btn=>btn.addEventListener("click",()=>{
+ gender=btn.dataset.gender;document.querySelectorAll(".gender-btn").forEach(x=>x.classList.toggle("selected",x===btn));
+ document.getElementById("styleFilters").hidden=false;
+ cards.forEach(c=>c.style.display=c.dataset.gender===gender?"block":"none");
+ document.querySelector(".section-head h2").textContent=gender==="Male"?"Men's collection":"Women's collection";
+ document.querySelector(".section-head p").textContent="Choose your fit and customize your tee.";
+}));
+document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===btn));
+ cards.forEach(c=>c.style.display=c.dataset.gender===gender&&(btn.dataset.filter==="All"||c.dataset.kind===btn.dataset.filter)?"block":"none");
+}));
+cards.forEach(card=>card.addEventListener("click",()=>{const name=card.querySelector("h3").textContent;location.href="product.html?product="+encodeURIComponent(name)}));
+document.querySelectorAll(".product-info button").forEach(b=>b.addEventListener("click",e=>e.stopPropagation()));
+</script></body></html>
