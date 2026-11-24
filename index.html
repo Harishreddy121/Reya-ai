@@ -52,6 +52,16 @@ body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#0808
 .site-header{background:linear-gradient(110deg,#080808 0%,#17130d 48%,#080808 100%)}
 @media(max-width:480px){.product{padding:8px}.hero h1{color:#f5efe4}}
 
+
+/* Landing page actions and gender-first shopping */
+.hero-action-panel{display:inline-flex;gap:12px;flex-wrap:wrap;padding:12px;border:1px solid #8e6b2d;border-radius:8px;background:linear-gradient(120deg,#17120b,#090909);box-shadow:0 10px 30px #0006;margin-top:18px}
+.hero-actions{margin-top:0}
+.shop-section[hidden],.custom[hidden],#styleFilters[hidden]{display:none!important}
+.gender-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:22px 0}
+.gender-btn{min-height:105px;border:1px solid #8e6b2d;border-radius:6px;background:linear-gradient(135deg,#21190e,#0b0b0b);color:#f1dfb9;font-family:Georgia,serif;font-size:24px;letter-spacing:2px;font-weight:700}
+.gender-btn:active,.gender-btn.selected{background:linear-gradient(135deg,#d8b56e,#a77b35);color:#100d08}
+.shop-section .section-head{margin-top:34px}
+@media(max-width:480px){.hero-action-panel{display:flex;width:100%;padding:10px;gap:9px}.hero-action-panel .btn{flex:1;padding:14px 10px;font-size:11px}.gender-btn{min-height:88px;font-size:21px}}
 </style>
 </head>
 <body>
@@ -72,20 +82,20 @@ body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#0808
 </header>
 <main class="wrap">
 <section class="hero">
-<div><div class="eyebrow">YOUR IDEA. YOUR T-SHIRT.</div><h1>WEAR YOUR<br><em>OWN STYLE.</em></h1><p>Custom printed T-shirts made around your ideas. Pick your style, choose a colour, upload your artwork and send your order directly to us.</p><div class="hero-actions"><a class="btn" href="#shop">SHOP COLLECTION</a><a class="btn light" href="#customize">MAKE IT YOURS</a></div></div>
+<div><div class="eyebrow">YOUR IDEA. YOUR T-SHIRT.</div><h1>WEAR YOUR<br><em>OWN STYLE.</em></h1><p>Custom printed T-shirts made around your ideas. Pick your style, choose a colour, upload your artwork and send your order directly to us.</p><div class="hero-action-panel"><a class="btn" id="shopCta" href="#shop">SHOP COLLECTION</a><a class="btn light" id="customCta" href="#customize">MAKE IT YOURS</a></div></div>
 <div class="hero-art"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1100&q=85" alt="T-shirt collection"><div class="hero-stamp">DESIGNED BY YOU · PRINTED BY REYA</div></div>
 </section>
-<section id="shop">
+<section id="shop" class="shop-section" hidden>
 <div class="section-head"><div><div class="eyebrow">THE REYA DROP</div><h2>Find your fit.</h2><p>Choose a base tee to start customizing.</p></div><div class="small">COLLECTION / 01</div></div>
-<div class="filters"><button class="filter active" data-filter="All">All tees</button><button class="filter" data-filter="Oversized">Oversized</button><button class="filter" data-filter="Regular">Regular fit</button><button class="filter" data-filter="Premium">Premium</button></div>
+<div class="gender-picker" id="genderPicker"><button class="gender-btn" data-gender="Male">MEN</button><button class="gender-btn" data-gender="Female">WOMEN</button></div><div class="filters" id="styleFilters" hidden><button class="filter active" data-filter="All">All styles</button><button class="filter" data-filter="Oversized">Oversized</button><button class="filter" data-filter="Regular">Regular fit</button><button class="filter" data-filter="Premium">Premium</button></div>
 <div class="products" id="products">
-<article class="product" data-kind="Oversized"><div class="product-photo"><span class="tag">BESTSELLER</span><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=650&q=80" alt="Classic oversized tee"></div><div class="product-info"><h3>Classic Oversized Tee</h3><p>Relaxed fit · Everyday comfort</p><span class="price">₹349</span><button data-name="Classic Oversized Tee" data-price="349">CUSTOMIZE</button></div></article>
-<article class="product" data-kind="Regular"><div class="product-photo"><img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=650&q=80" alt="Essential regular tee"></div><div class="product-info"><h3>Essential Regular Tee</h3><p>Classic fit · Clean look</p><span class="price">₹349</span><button data-name="Essential Regular Tee" data-price="349">CUSTOMIZE</button></div></article>
-<article class="product" data-kind="Premium"><div class="product-photo"><span class="tag">PREMIUM</span><img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=650&q=80" alt="Premium graphic tee"></div><div class="product-info"><h3>Premium Print Tee</h3><p>Premium feel · Your artwork</p><span class="price">₹349</span><button data-name="Premium Print Tee" data-price="349">CUSTOMIZE</button></div></article>
-<article class="product" data-kind="Oversized"><div class="product-photo"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=650&q=80" alt="Streetwear oversized tee"></div><div class="product-info"><h3>Streetwear Oversized</h3><p>Street style · Relaxed fit</p><span class="price">₹349</span><button data-name="Streetwear Oversized" data-price="349">CUSTOMIZE</button></div></article>
+<article class="product" data-gender="Male" data-kind="Oversized"><div class="product-photo"><span class="tag">BESTSELLER</span><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=650&q=80" alt="Classic oversized tee"></div><div class="product-info"><h3>Classic Oversized Tee</h3><p>Relaxed fit · Everyday comfort</p><span class="price">₹349</span><button data-name="Classic Oversized Tee" data-price="349">CUSTOMIZE</button></div></article>
+<article class="product" data-gender="Male" data-kind="Regular"><div class="product-photo"><img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=650&q=80" alt="Essential regular tee"></div><div class="product-info"><h3>Essential Regular Tee</h3><p>Classic fit · Clean look</p><span class="price">₹349</span><button data-name="Essential Regular Tee" data-price="349">CUSTOMIZE</button></div></article>
+<article class="product" data-gender="Female" data-kind="Premium"><div class="product-photo"><span class="tag">PREMIUM</span><img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=650&q=80" alt="Premium graphic tee"></div><div class="product-info"><h3>Premium Print Tee</h3><p>Premium feel · Your artwork</p><span class="price">₹349</span><button data-name="Premium Print Tee" data-price="349">CUSTOMIZE</button></div></article>
+<article class="product" data-gender="Female" data-kind="Oversized"><div class="product-photo"><img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=650&q=80" alt="Streetwear oversized tee"></div><div class="product-info"><h3>Streetwear Oversized</h3><p>Street style · Relaxed fit</p><span class="price">₹349</span><button data-name="Streetwear Oversized" data-price="349">CUSTOMIZE</button></div></article>
 </div>
 </section>
-<section class="custom" id="customize">
+<section class="custom" id="customize" hidden>
 <div><div class="eyebrow" style="color:#d7ff54">BUILD YOUR OWN</div><h2>Make it yours.</h2><p>Select your T-shirt, size and colour. Add your own text or upload a photo/logo. Preview the basic design and send your order details to REYA on WhatsApp.</p>
 <div class="formgrid">
 <div class="field full"><label for="style">T-SHIRT STYLE</label><select id="style"><option value="Classic Oversized Tee" data-price="349">Classic Oversized Tee — ₹349</option><option value="Essential Regular Tee" data-price="349">Essential Regular Tee — ₹349</option><option value="Premium Print Tee" data-price="349">Premium Print Tee — ₹349</option><option value="Streetwear Oversized" data-price="349">Streetwear Oversized — ₹349</option></select></div>
@@ -115,8 +125,15 @@ function toast(msg){const el=$("toast");el.textContent=msg;el.style.display="blo
 function updatePreview(){const opt=$("style").selectedOptions[0];const price=Number(opt.dataset.price)||prices[$("style").value]||499;const qty=Math.max(1,Math.min(100,Number($("quantity").value)||1));$("total").textContent="₹"+(price*qty).toLocaleString("en-IN");$("tee").style.background=$("colour").value;$("teeText").textContent=$("customText").value;$("teeText").style.color=$("printColour").value;$("teeDesign").hidden=!uploadedImage;if(uploadedImage)$("teeDesign").src=uploadedImage}
 ["style","size","colour","customText","printColour","quantity"].forEach(id=>$(id).addEventListener("input",updatePreview));
 $("artwork").addEventListener("change",e=>{const file=e.target.files&&e.target.files[0];if(!file)return;if(!file.type.startsWith("image/")){toast("Please select an image file.");return}if(file.size>8*1024*1024){toast("Please choose an image smaller than 8 MB.");e.target.value="";return}const reader=new FileReader();reader.onload=()=>{uploadedImage=reader.result;updatePreview()};reader.readAsDataURL(file)});
-document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.querySelectorAll(".product").forEach(p=>p.style.display=btn.dataset.filter==="All"||p.dataset.kind===btn.dataset.filter?"block":"none")}));
-document.querySelectorAll(".product-info button").forEach(btn=>btn.addEventListener("click",()=>{$("style").value=btn.dataset.name;updatePreview();$("customize").scrollIntoView({behavior:"smooth"})}));
+
+function showSection(section){$("shop").hidden=section!=="shop";$("customize").hidden=section!=="customize";if(section==="shop")$("shop").scrollIntoView({behavior:"smooth"});if(section==="customize")$("customize").scrollIntoView({behavior:"smooth"})}
+$("shopCta").addEventListener("click",e=>{e.preventDefault();showSection("shop")});
+$("customCta").addEventListener("click",e=>{e.preventDefault();showSection("customize")});
+let activeGender="";
+document.querySelectorAll(".gender-btn").forEach(btn=>btn.addEventListener("click",()=>{activeGender=btn.dataset.gender;document.querySelectorAll(".gender-btn").forEach(b=>b.classList.toggle("selected",b===btn));$("styleFilters").hidden=false;document.querySelectorAll(".product").forEach(p=>p.style.display=p.dataset.gender===activeGender?"block":"none");$("shop").querySelector(".section-head h2").textContent=activeGender==="Male"?"Men's collection":"Women's collection";$("shop").querySelector(".section-head p").textContent="Choose your fit and customize your tee."}));
+document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.querySelectorAll(".product").forEach(p=>p.style.display=p.dataset.gender===activeGender&&(btn.dataset.filter==="All"||p.dataset.kind===btn.dataset.filter)?"block":"none")}));
+
+document.querySelectorAll(".product-info button").forEach(btn=>btn.addEventListener("click",()=>{$("style").value=btn.dataset.name;updatePreview();showSection("customize")}));
 $("orderBtn").addEventListener("click",()=>{const name=$("customer").value.trim(),phone=$("phone").value.trim(),qty=Math.max(1,Math.min(100,Number($("quantity").value)||1)),style=$("style").value,size=$("size").value,colour=$("colour").selectedOptions[0].dataset.label||$("colour").selectedOptions[0].text,price=prices[style]*qty;if(!name||!phone){toast("Please enter your name and mobile number.");return}const msg=["Hi REYA! I want to place a custom T-shirt order.","Name: "+name,"Mobile: "+phone,"Style: "+style,"Size: "+size,"Colour: "+colour,"Quantity: "+qty,"Text: "+($("customText").value.trim()||"None"),"Artwork uploaded: "+(uploadedImage?"Yes (I will share the image in WhatsApp)":"No"),"Estimated total: ₹"+price.toLocaleString("en-IN"),"Delivery address: "+($("address").value.trim()||"Will share later"),"Please confirm availability, final design, shipping and payment details."].join("\n");const url="https://wa.me/919177058292?text="+encodeURIComponent(msg);window.open(url,"_blank","noopener,noreferrer")});
 $("year").textContent=new Date().getFullYear();updatePreview();
 </script>
