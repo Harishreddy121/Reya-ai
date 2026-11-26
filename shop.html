@@ -188,7 +188,11 @@ body{background:radial-gradient(ellipse at 50% -20%,#211a10 0%,#0b0a09 42%,#0808
     <div class="why-copy">© <span id="year"></span> REYA CUSTOM TEES</div>
   </div>
 </section><script>
-const cards=[...document.querySelectorAll(".product")];let gender="";
+const productsRoot=document.getElementById("products");
+// New product cards are added at the end of the HTML; reverse them so the newest collection appears first.
+const cards=[...productsRoot.querySelectorAll(".product")].reverse();
+cards.forEach(card=>productsRoot.appendChild(card));
+let gender="";
 document.querySelectorAll(".gender-btn").forEach(btn=>btn.addEventListener("click",()=>{
  gender=btn.dataset.gender;document.querySelectorAll(".gender-btn").forEach(x=>x.classList.toggle("selected",x===btn));
  document.getElementById("styleFilters").hidden=false;
