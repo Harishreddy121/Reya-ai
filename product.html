@@ -38,4 +38,5 @@ document.getElementById("minus").onclick=()=>{qty=Math.max(1,qty-1);document.get
 document.getElementById("check").onclick=()=>{const pin=document.getElementById("pin").value.trim();document.getElementById("notice").textContent=/^\d{6}$/.test(pin)?"PIN captured. REYA will confirm delivery availability.":"Enter a valid 6-digit PIN code."};
 document.getElementById("add").onclick=()=>{document.getElementById("notice").textContent="Cart functionality will be connected with checkout in the next step."};
 document.getElementById("buy").onclick=()=>{sessionStorage.setItem("reyaCheckoutProduct",JSON.stringify({name,price:p.price||349,size,colour,qty,image:p.image}));location.href="address.html"};
-</script></body></html>
+</script><script src="product-catalog.js"></script>
+</body></html>
